@@ -1,1 +1,2 @@
-const passwordEncryptKey = 'passwordEncryptKey';
+const googleId = 'googleId';
+const passCodeEncryptKey = 'passCodeEncryptKey';

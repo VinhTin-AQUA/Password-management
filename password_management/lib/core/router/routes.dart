@@ -5,6 +5,7 @@ import 'package:password_management/presentation/views/create_passcode/create_pa
 import 'package:password_management/presentation/views/home/home.dart';
 import 'package:password_management/presentation/views/login_app/login_app.dart';
 import 'package:password_management/presentation/views/settings/settings.dart';
+import 'package:password_management/presentation/views/splash_screen/splash_screen.dart';
 
 class TRoutes {
   static const home = '/';
@@ -12,12 +13,20 @@ class TRoutes {
   static const loginApp = "/login-app";
   static const settings = "/settings";
   static const createPassword = "/create-password";
+  static const splashScreen = "/splash-screen";
 
   static String getInitialRoute() {
-    return createPassword;
+    return splashScreen;
   }
 
   static List<GetPage<dynamic>> generateRoute() => [
+    GetPage(
+      name: TRoutes.splashScreen,
+      page: () => SplashScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: Duration(milliseconds: 100),
+      curve: Curves.easeOut,
+    ),
     GetPage(
       name: TRoutes.home,
       page: () => Home(),
