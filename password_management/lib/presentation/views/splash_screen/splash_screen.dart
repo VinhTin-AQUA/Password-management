@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/views/create_passcode/create_passcode.dart';
 import 'package:password_management/presentation/views/home/home.dart';

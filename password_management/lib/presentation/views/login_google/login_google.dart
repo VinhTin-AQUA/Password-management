@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:password_management/presentation/views/home/home.dart';
+import 'package:password_management/data/providers/google_signin_provider.dart';
 
 class LoginGoogle extends StatefulWidget {
   const LoginGoogle({super.key});
@@ -12,27 +9,9 @@ class LoginGoogle extends StatefulWidget {
 }
 
 class _LoginGoogleState extends State<LoginGoogle> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   Future<void> _handleSignIn() async {
-    try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account != null) {
-        // Đăng nhập thành công
-        print('Đăng nhập thành công: ${account.email}');
-        // Chuyển màn hình sau khi đăng nhập
-        Get.offAll(
-          () => Home(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-      } else {
-        print('Người dùng đã huỷ đăng nhập');
-      }
-    } catch (error) {
-      print('Lỗi đăng nhập: $error');
-    }
+    final user = await GoogleSignInProvider.signInWithGoogle();
+    print(user);
   }
 
   @override
