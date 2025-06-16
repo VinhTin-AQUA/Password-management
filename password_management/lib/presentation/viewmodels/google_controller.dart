@@ -1,9 +1,11 @@
+import 'package:password_management/core/constants/contants.dart';
+import 'package:password_management/core/utils/secure_storage_util.dart';
 import 'package:password_management/data/models/firebase_user_info.dart';
 import 'package:password_management/data/models/google_user_info.dart';
 import 'package:password_management/data/providers/google_signin_provider.dart';
 import 'package:get/get.dart';
 
-class AccountController extends GetxController {
+class GooleController extends GetxController {
   FirebaseUserInfo firebaseUserInfo = FirebaseUserInfo();
   GoogleUserInfo googleUserInfo = GoogleUserInfo();
 
@@ -67,6 +69,9 @@ class AccountController extends GetxController {
     googleUserInfo.uid = googleProvider.uid ?? "Error";
 
     update();
+    if (googleProvider.uid != null) {
+      SecureStorageUtil.savePassword(googleId, googleProvider.uid);
+    }
     return true;
   }
 }

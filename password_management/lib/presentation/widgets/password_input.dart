@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PasswordInput extends StatefulWidget {
   final IconData? icon;
   final String hintText;
+  final void Function(String)? onChanged;
+  final String? errorText; // ➕ Thêm thuộc tính báo lỗi
 
-  const PasswordInput({super.key, this.icon, this.hintText = ''});
+  const PasswordInput({
+    super.key,
+    this.icon,
+    this.hintText = '',
+    this.onChanged,
+    this.errorText, 
+  });
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -20,7 +29,7 @@ class _PasswordInputState extends State<PasswordInput> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center, // chỉ có 1 dòng
+      crossAxisAlignment: CrossAxisAlignment.start, // chỉ có 1 dòng
       children: [
         if (widget.icon != null)
           Padding(
@@ -30,9 +39,12 @@ class _PasswordInputState extends State<PasswordInput> {
         Expanded(
           child: TextField(
             obscureText: _obscureText,
+            onChanged: widget.onChanged,
+             inputFormatters:[FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               hintText: widget.hintText,
               border: OutlineInputBorder(),
+              errorText: widget.errorText,
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,

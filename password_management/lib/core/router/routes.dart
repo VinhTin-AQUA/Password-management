@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/views/add_account/add_account.dart';
-import 'package:password_management/presentation/views/create_passcode/create_password.dart';
+import 'package:password_management/presentation/views/create_password/create_password.dart';
 import 'package:password_management/presentation/views/home/home.dart';
 import 'package:password_management/presentation/views/login_app/login_app.dart';
 import 'package:password_management/presentation/views/login_google/login_google.dart';
@@ -94,6 +94,14 @@ class TRoutes {
       case createPassword:
         Get.offAll(
           () => CreatePassword(),
+          transition: Transition.fadeIn,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeOut,
+        );
+        break;
+      case loginApp:
+        Get.offAll(
+          () => LoginApp(),
           transition: Transition.fadeIn,
           duration: const Duration(milliseconds: 100),
           curve: Curves.easeOut,

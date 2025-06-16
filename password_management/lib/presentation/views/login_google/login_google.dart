@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:password_management/core/init/initial_app.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/presentation/viewmodels/account_controller.dart';
+import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class LoginGoogle extends StatefulWidget {
   const LoginGoogle({super.key});
@@ -11,20 +12,25 @@ class LoginGoogle extends StatefulWidget {
 }
 
 class _LoginGoogleState extends State<LoginGoogle> {
-  Future<void> _handleSignIn(AccountController builder) async {
+  Future<void> _handleSignIn(GooleController builder) async {
     final check = await builder.loginGoogle();
 
     if (check == false) {
       return;
     }
 
-    TRoutes.offAll(TRoutes.home);
-    TRoutes.offAll(TRoutes.createPassword);
+    var isCreatePassword = await InitialApp.checkCreatePassword();
+    if (isCreatePassword == false) {
+      TRoutes.offAll(TRoutes.createPassword);
+      return;
+    }
+
+    TRoutes.offAll(TRoutes.loginApp);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AccountController>(
+    return GetBuilder<GooleController>(
       builder: (builder) {
         return Scaffold(
           body: SafeArea(

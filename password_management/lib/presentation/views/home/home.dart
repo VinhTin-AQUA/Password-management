@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:password_management/presentation/viewmodels/account_controller.dart';
+import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AccountController>(
+    return GetBuilder<GooleController>(
       builder: (builder) {
         return Scaffold(
           backgroundColor: Colors.black,
