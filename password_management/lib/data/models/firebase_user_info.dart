@@ -1,13 +1,14 @@
-
 // User info in Firebase Authentication
 class FirebaseUserInfo {
-  final String displayName = "";
-  final String email = "";
-  final bool isEmailVerified = false;
-  final bool isAnonymous = false;
-  final String phoneNumber = "";
-  final String photoURL = "";
-  final String uid = "";
-  final String refreshToken = "";
-  final String tenantId = "";
+  String displayName = "";
+  String email = "";
+  bool isAnonymous = false;
+  bool emailVerified = false;
+  String phoneNumber = "";
+  String photoURL = "";
+  String uid = "";
+  String refreshToken = "";
+  String tenantId = "";
+
+  FirebaseUserInfo();
 }

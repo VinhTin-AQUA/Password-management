@@ -45,7 +45,7 @@ class _LoginAppState extends State<LoginApp> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: PasswordInput(
-                              hintText: 'Input your passcode',
+                              hintText: 'Input your password',
                             ),
                           ),
                         ),
@@ -58,7 +58,7 @@ class _LoginAppState extends State<LoginApp> {
                           child: ElevatedButton(
                             onPressed: () {
                               // Implement login logic here using _passwordController.text
-                              print("Login with passcode: ");
+                              print("Login with password: ");
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.lightBlue.shade300,

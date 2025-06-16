@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:password_management/presentation/views/create_passcode/create_passcode.dart';
-import 'package:password_management/presentation/views/home/home.dart';
-import 'package:password_management/presentation/views/login_google/login_google.dart';
-import 'package:password_management/presentation/views/splash_screen/initial_app.dart';
+import 'package:password_management/core/router/routes.dart';
+import 'package:password_management/core/init/initial_app.dart';
+import 'package:password_management/data/providers/google_signin_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,43 +19,23 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _initializeApp() async {
-    final results = await Future.wait([
-      InitialApp.checkCreatePasscode(), // Trả về Future<bool>
-      InitialApp.checkLoginGoogle(), // Trả về Future<void> hoặc một giá trị
-    ]);
+    await Future.wait([InitialApp.initControllers()]);
 
-    var isLoginGoole = results[0]; //là kết quả từ checkUserToken()
-    var isCreatePasscode = results[1]; //là kết quả từ loadAppConfig()
+    var isLoginGoole = GoogleSignInProvider.signedIn();
+    if (isLoginGoole == false) {
+      TRoutes.offAll(TRoutes.loginGoole);
+      return;
+    }
 
-    await Future.wait([]);
+    var isCreatePassword = await InitialApp.checkCreatePassword();
+    if (isCreatePassword == false) {
+      TRoutes.offAll(TRoutes.createPassword);
+      return;
+    }
 
     WidgetsBinding.instance.performReassemble();
-    if (isLoginGoole == false) {
-      Get.offAll(
-        () => LoginGoogle(),
-        transition: Transition.fadeIn,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.easeOut,
-      );
-      return;
-    }
 
-    if (isCreatePasscode == false) {
-      Get.offAll(
-        () => CreatePasscode(),
-        transition: Transition.fadeIn,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.easeOut,
-      );
-      return;
-    }
-
-    Get.offAll(
-      () => Home(),
-      transition: Transition.fadeIn,
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.easeOut,
-    );
+    TRoutes.offAll(TRoutes.home);
   }
 
   @override

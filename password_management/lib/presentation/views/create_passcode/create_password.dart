@@ -4,14 +4,14 @@ import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 
-class CreatePasscode extends StatefulWidget {
-  const CreatePasscode({super.key});
+class CreatePassword extends StatefulWidget {
+  const CreatePassword({super.key});
 
   @override
-  State<CreatePasscode> createState() => _CreatePasscodeState();
+  State<CreatePassword> createState() => _CreatePasswordState();
 }
 
-class _CreatePasscodeState extends State<CreatePasscode> {
+class _CreatePasswordState extends State<CreatePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,22 +37,15 @@ class _CreatePasscodeState extends State<CreatePasscode> {
                       Logo(size: 150),
                       const SizedBox(height: 20),
                       const Text(
-                        'Create a passcode',
+                        'Create a password',
                         style: TextStyle(fontSize: 20),
                       ),
                       const SizedBox(height: 40),
-                      PasswordInput(
-                        hintText: 'Enter passcode',
-                      ),
+                      PasswordInput(hintText: 'Enter password'),
                       const SizedBox(height: 20),
-                      PasswordInput(
-                        hintText: 'Enter passcode',
-                      ),
+                      PasswordInput(hintText: 'Enter password'),
                       const SizedBox(height: 20),
-                      Button(
-                        text: 'Create Passcode',
-                        onPressed: () => {},
-                      ),
+                      Button(text: 'Create password', onPressed: () => {}),
                     ],
                   ),
                 ),

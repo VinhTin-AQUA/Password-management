@@ -27,4 +27,12 @@ class GoogleSignInProvider {
     await _googleSignIn.signOut();
     await _auth.signOut();
   }
+
+  static bool signedIn() {
+    return _googleSignIn.currentUser != null;
+  }
+
+  static User? getCurrentUser() {
+    return FirebaseAuth.instance.currentUser;
+  }
 }
