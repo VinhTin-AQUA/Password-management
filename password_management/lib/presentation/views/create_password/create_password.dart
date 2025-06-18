@@ -72,15 +72,15 @@ class _CreatePasswordState extends State<CreatePassword> {
                               style: TextStyle(fontSize: 20),
                             ),
                             const SizedBox(height: 40),
-                            PasswordInput(
-                              hintText: 'Only number',
+                            PasswordInputField(
+                              hintText: 'Input password',
                               onChanged: builder.updatePassword,
                               errorText:
                                   passValid ? null : 'Password is not empty',
                             ),
                             const SizedBox(height: 20),
-                            PasswordInput(
-                              hintText: 'Only number',
+                            PasswordInputField(
+                              hintText: 'Confirm password',
                               onChanged: builder.updateConfirmPassword,
                               errorText:
                                   confirmPassValid

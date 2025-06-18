@@ -19,9 +19,9 @@ class _LoginAppState extends State<LoginApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-           const SizedBox(height: 40),
-                  Header(),
-                  const SizedBox(height: 20),
+            const SizedBox(height: 40),
+            Header(),
+            const SizedBox(height: 20),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
@@ -36,7 +36,7 @@ class _LoginAppState extends State<LoginApp> {
                     child: Column(
                       children: [
                         SizedBox(height: 30),
-                        Logo(size: 150,),
+                        Logo(size: 150),
                         SizedBox(height: 40),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -44,8 +44,9 @@ class _LoginAppState extends State<LoginApp> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: PasswordInput(
-                              hintText: 'Input your password',
+                            child: PasswordInputField(
+                              hintText: 'Input password',
+                              onChanged: (value) {},
                             ),
                           ),
                         ),

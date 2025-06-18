@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     WidgetsBinding.instance.performReassemble();
 
-    TRoutes.offAll(TRoutes.home);
+    TRoutes.offAll(TRoutes.loginApp);
   }
 
   @override

@@ -32,32 +32,37 @@ class _AddAccountState extends State<AddAccount> {
                   const SizedBox(height: 40),
                   Header(),
                   const SizedBox(height: 20),
-                  const InputInput(
+                  TextInput(
                     icon: Icons.apps,
                     maxLines: 1,
                     hintText: "App name",
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(height: 10),
-                  const InputInput(
+                  TextInput(
                     icon: Icons.account_circle,
                     maxLines: 1,
                     hintText: "User name",
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(height: 10),
-                  const PasswordInput(
+                  PasswordInputField(
                     icon: Icons.password,
                     hintText: "Password",
+                    onChanged: (value) {},
                   ),
                   const SizedBox(height: 10),
-                  const PasswordInput(
+                  PasswordInputField(
                     icon: Icons.password,
                     hintText: "Confirm Password",
+                    onChanged: (value) {},
                   ),
                   const SizedBox(height: 10),
-                  const InputInput(
+                  TextInput(
                     icon: Icons.edit_note,
                     maxLines: 5,
                     hintText: "Notes",
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
