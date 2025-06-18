@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:password_management/core/router/routes.dart';
+import 'package:password_management/presentation/viewmodels/password_controller.dart';
+import 'package:password_management/presentation/widgets/button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -11,107 +15,83 @@ class LoginApp extends StatefulWidget {
 }
 
 class _LoginAppState extends State<LoginApp> {
+  bool validPassword = true;
+
+  Future<void> _login(PasswordController builder) async {
+    final check = await builder.loginApp();
+     setState(() {
+      validPassword = true;
+    });
+    if (check == true) {
+      TRoutes.offAll(TRoutes.home);
+      return;
+    }
+    setState(() {
+      validPassword = false;
+    });
+    print(check);
+    print(validPassword);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 40),
-            Header(),
-            const SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(30),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 30),
-                        Logo(size: 150),
-                        SizedBox(height: 40),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+    return GetBuilder<PasswordController>(
+      builder: (builder) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 5),
+                    Header(),
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20),
+                            Logo(size: 150),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'Login APP',
+                              style: TextStyle(fontSize: 20),
                             ),
-                            child: PasswordInputField(
+                            const SizedBox(height: 40),
+                            PasswordInputField(
                               hintText: 'Input password',
-                              onChanged: (value) {},
+                              onChanged: builder.updatePassword,
+                              errorText:
+                                  validPassword == true
+                                      ? null
+                                      : "Invalid Password",
                             ),
-                          ),
+                            const SizedBox(height: 20),
+                            const SizedBox(height: 20),
+                            Button(
+                              text: 'Login',
+                              onPressed: () async {
+                                await _login(builder);
+                              },
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Implement login logic here using _passwordController.text
-                              print("Login with password: ");
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightBlue.shade300,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 80,
-                                vertical: 15,
-                              ),
-                              textStyle: TextStyle(fontSize: 18),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: Text('Login'),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text('Or', style: TextStyle(fontSize: 16)),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Implement fingerprint authentication logic here
-                            print("Authenticate with fingerprint");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlue.shade300,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 50,
-                              vertical: 15,
-                            ),
-                            textStyle: TextStyle(fontSize: 18),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.fingerprint),
-                              SizedBox(width: 8),
-                              Text('Biometric'),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -58,7 +58,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
               color:
                   hasError
                       ? Colors.red
-                      : (_isFocused ? Colors.blue : Colors.transparent),
+                      : (_isFocused ? Colors.black : Colors.transparent),
               width: 1.5,
             ),
             boxShadow: [

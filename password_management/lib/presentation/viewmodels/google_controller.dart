@@ -70,7 +70,7 @@ class GooleController extends GetxController {
 
     update();
     if (googleProvider.uid != null) {
-      SecureStorageUtil.savePassword(googleId, googleProvider.uid);
+      SecureStorageUtil.saveValue(googleId, googleProvider.uid);
     }
     return true;
   }

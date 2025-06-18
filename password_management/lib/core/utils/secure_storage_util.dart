@@ -11,11 +11,16 @@ class SecureStorageUtil {
     return password != null;
   }
 
-  static Future<void> savePassword(key, value) async {
+  static Future<void> saveValue(key, value) async {
     await _secureStorage.write(key: key, value: value);
   }
 
   static Future<void> clearValue(key) async {
     await _secureStorage.delete(key: key);
+  }
+
+  static Future<String?> getValue(String key) async {
+    String? password = await _secureStorage.read(key: key);
+    return password;
   }
 }

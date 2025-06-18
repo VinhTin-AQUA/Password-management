@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/presentation/viewmodels/create_password_controller.dart';
+import 'package:password_management/presentation/viewmodels/password_controller.dart';
 import 'package:password_management/presentation/widgets/button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
@@ -18,7 +18,7 @@ class _CreatePasswordState extends State<CreatePassword> {
   bool passValid = true;
   bool confirmPassValid = true;
 
-  void _savePassword(builder) {
+  Future<void> _savePassword(PasswordController builder) async {
     if (builder.password == "") {
       setState(() {
         passValid = false;
@@ -36,13 +36,13 @@ class _CreatePasswordState extends State<CreatePassword> {
       passValid = true;
       confirmPassValid = true;
     });
-    builder.savePassword();
+    await builder.savePassword();
     TRoutes.offAll(TRoutes.home);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CreatePasswordController>(
+    return GetBuilder<PasswordController>(
       builder: (builder) {
         return Scaffold(
           backgroundColor: Colors.white,

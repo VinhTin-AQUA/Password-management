@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:password_management/core/constants/contants.dart';
 import 'package:password_management/core/utils/secure_storage_util.dart';
 
-class CreatePasswordController extends GetxController {
+class PasswordController extends GetxController {
   String password = "";
   String confirmPassword = "";
 
@@ -19,6 +19,16 @@ class CreatePasswordController extends GetxController {
   }
 
   Future<void> savePassword() async {
-    SecureStorageUtil.savePassword(passwordEncryptKey, password);
+    await SecureStorageUtil.saveValue(passwordEncryptKey, password);
+    password = "";
+    confirmPassword = "";
+  }
+
+  Future<bool> loginApp() async {
+    final passwordSaved = await SecureStorageUtil.getValue(passwordEncryptKey);
+    if (passwordSaved != password) {
+      return false;
+    }
+    return true;
   }
 }
