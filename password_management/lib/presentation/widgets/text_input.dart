@@ -46,68 +46,86 @@ class _TextInputState extends State<TextInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: _isFocused ? Colors.black : Colors.transparent,
-          width: 1.5,
-        ),
-        boxShadow: [
-          if (_isFocused)
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            )
-          else
-            BoxShadow(
-              color: Colors.grey.shade400.withValues(alpha: 0.2),
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+    final bool hasError =
+        widget.errorText != null && widget.errorText!.isNotEmpty;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color:
+                  hasError
+                      ? Colors.red
+                      : (_isFocused ? Colors.blue : Colors.transparent),
+              width: 1.5,
             ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Row(
-          children: [
-            if (widget.icon != null) Icon(widget.icon),
-            if (widget.icon != null) const SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                controller: _controller,
-                obscureText: _obscureText,
-                focusNode: _focusNode, 
-                keyboardType: TextInputType.visiblePassword,
-                inputFormatters: [
-                  // Cho phép tất cả ký tự ASCII (bao gồm cả ký tự chưa được composed)
-                  FilteringTextInputFormatter.allow(RegExp(r'[\x00-\x7F]')),
-                ],
-                onChanged: (value) {
-                  widget.onChanged(value);
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: widget.hintText,
-                  errorText: widget.errorText,
+            boxShadow: [
+              if (_isFocused)
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                )
+              else
+                BoxShadow(
+                  color: Colors.grey.shade400.withValues(alpha: 0.2),
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
                 ),
-              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              children: [
+                if (widget.icon != null) Icon(widget.icon),
+                if (widget.icon != null) const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    obscureText: _obscureText,
+                    focusNode: _focusNode,
+                    keyboardType: TextInputType.visiblePassword,
+                    inputFormatters: [
+                      // Cho phép tất cả ký tự ASCII (bao gồm cả ký tự chưa được composed)
+                      FilteringTextInputFormatter.allow(RegExp(r'[\x00-\x7F]')),
+                    ],
+                    onChanged: (value) {
+                      widget.onChanged(value);
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: widget.hintText,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
+              ],
             ),
-            IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
-              ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ),
-          ],
+          ),
         ),
-      ),
+        if (hasError)
+          Padding(
+            padding: const EdgeInsets.only(top: 6, left: 8),
+            child: Text(
+              widget.errorText!,
+              style: TextStyle(color: Colors.red[700], fontSize: 13),
+            ),
+          ),
+      ],
     );
   }
 }

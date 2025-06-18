@@ -6,18 +6,26 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      width: double.infinity, // Cho responsive nếu cần
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(30),
+        color: const Color(0xFF1C1C1E),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Center(
         child: Text(
           'Password Manager',
           style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
             color: Colors.white,
           ),
         ),
@@ -25,3 +33,4 @@ class Header extends StatelessWidget {
     );
   }
 }
+
