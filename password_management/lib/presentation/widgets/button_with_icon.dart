@@ -24,8 +24,8 @@ class ButtonWithIcon extends StatelessWidget {
           child: Text(text, style: TextStyle(), textAlign: TextAlign.center),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey[300],
-          foregroundColor: Colors.black,
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.grey[300],
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

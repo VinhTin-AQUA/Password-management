@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:password_management/presentation/widgets/t_button.dart';
+import 'package:password_management/presentation/widgets/button_with_icon.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 import 'package:password_management/presentation/widgets/text_area.dart';
@@ -65,24 +67,7 @@ class _AddAccountState extends State<AddAccount> {
                     onChanged: (String value) {},
                   ),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      '+',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  TButton(onPressed: () {}, text: "+"),
                 ],
               ),
             ),

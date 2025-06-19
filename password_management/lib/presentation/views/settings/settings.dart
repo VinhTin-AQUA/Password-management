@@ -14,37 +14,40 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Header(),
+                ButtonWithIcon(
+                  icon: Icons.file_download,
+                  text: 'Export excel',
+                  onPressed: () {
+                    // Handle export excel
+                  },
+                ),
+                const SizedBox(height: 16),
+                ButtonWithIcon(
+                  icon: Icons.file_upload,
+                  text: 'Import excel',
+                  onPressed: () {
+                    // Handle import excel
+                  },
+                ),
+                const SizedBox(height: 16),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Header(),
-            ButtonWithIcon(
-              icon: Icons.file_download,
-              text: 'Export excel',
-              onPressed: () {
-                // Handle export excel
-              },
+                ButtonWithIcon(
+                  icon: Icons.logout,
+                  text: 'Logout',
+                  onPressed: () {
+                    // Handle logout
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            ButtonWithIcon(
-              icon: Icons.file_upload,
-              text: 'Import excel',
-              onPressed: () {
-                // Handle import excel
-              },
-            ),
-            const SizedBox(height: 16),
-
-            ButtonWithIcon(
-              icon: Icons.logout,
-              text: 'Logout',
-              onPressed: () {
-                // Handle logout
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

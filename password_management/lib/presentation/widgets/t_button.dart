@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Button extends StatelessWidget {
+class TButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const Button({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
+  const TButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +17,8 @@ class Button extends StatelessWidget {
           child: Text(text, style: TextStyle(), textAlign: TextAlign.center),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.grey[300],
-          foregroundColor: Colors.black,
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.grey[300],
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

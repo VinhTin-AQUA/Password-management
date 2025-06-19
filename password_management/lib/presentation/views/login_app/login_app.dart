@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/password_controller.dart';
-import 'package:password_management/presentation/widgets/button.dart';
+import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -19,7 +19,7 @@ class _LoginAppState extends State<LoginApp> {
 
   Future<void> _login(PasswordController builder) async {
     final check = await builder.loginApp();
-     setState(() {
+    setState(() {
       validPassword = true;
     });
     if (check == true) {
@@ -73,7 +73,7 @@ class _LoginAppState extends State<LoginApp> {
                             ),
                             const SizedBox(height: 20),
                             const SizedBox(height: 20),
-                            Button(
+                            TButton(
                               text: 'Login',
                               onPressed: () async {
                                 await _login(builder);

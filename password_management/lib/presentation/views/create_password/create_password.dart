@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/password_controller.dart';
-import 'package:password_management/presentation/widgets/button.dart';
+import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -86,7 +86,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                                       : 'Password is not match',
                             ),
                             const SizedBox(height: 20),
-                            Button(
+                            TButton(
                               text: 'Create password',
                               onPressed: () {
                                 _savePassword(builder);
