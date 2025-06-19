@@ -110,4 +110,25 @@ class TRoutes {
       default:
     }
   }
+
+  static void to(String routeName) {
+    switch (routeName) {
+      case addAccount:
+        Get.to(
+          () => AddAccount(),
+          transition: Transition.fadeIn,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeOut,
+        );
+        break;
+      case settings:
+        Get.to(
+          () => Settings(),
+          transition: Transition.fadeIn,
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeOut,
+        );
+        break;
+    }
+  }
 }

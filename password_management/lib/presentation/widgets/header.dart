@@ -8,6 +8,7 @@ class Header extends StatelessWidget {
     return Container(
       width: double.infinity, // Cho responsive nếu cần
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      // margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: BoxDecoration(
         color: const Color(0xFF1C1C1E),
         borderRadius: BorderRadius.circular(20),

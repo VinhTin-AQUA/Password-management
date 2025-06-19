@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TextInput extends StatefulWidget {
+class TextArea extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final IconData? icon;
   final String hintText;
   final String? errorText; // ➕ Thêm thuộc tính báo lỗi
   final int maxLines;
 
-  const TextInput({
+  const TextArea({
     super.key,
     required this.onChanged,
     this.icon,
@@ -18,10 +18,10 @@ class TextInput extends StatefulWidget {
   });
 
   @override
-  State<TextInput> createState() => _TextInputState();
+  State<TextArea> createState() => _TextAreaState();
 }
 
-class _TextInputState extends State<TextInput> {
+class _TextAreaState extends State<TextArea> {
   final _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
@@ -80,8 +80,14 @@ class _TextInputState extends State<TextInput> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (widget.icon != null) Icon(widget.icon,),
+                if (widget.icon != null)
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(),
+                    child: Icon(widget.icon),
+                  ),
                 if (widget.icon != null) const SizedBox(width: 8),
                 Expanded(
                   child: TextField(

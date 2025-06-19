@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_management/core/router/routes.dart';
 
 class MenuBottomBar extends StatelessWidget {
   const MenuBottomBar({super.key});
@@ -6,9 +7,9 @@ class MenuBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MenuItemData> menuItems = [
-      MenuItemData(icon: Icons.home, onPressed: () => print('Home')),
-      MenuItemData(icon: Icons.add, onPressed: () => print('Add')),
-      MenuItemData(icon: Icons.settings, onPressed: () => print('Settings')),
+      MenuItemData(icon: Icons.home, onPressed: () => {}),
+      MenuItemData(icon: Icons.add, onPressed: () => TRoutes.to(TRoutes.addAccount)),
+      MenuItemData(icon: Icons.settings, onPressed: () => TRoutes.to(TRoutes.settings)),
     ];
 
     return Container(

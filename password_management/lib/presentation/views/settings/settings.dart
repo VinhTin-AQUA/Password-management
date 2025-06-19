@@ -19,9 +19,7 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const SizedBox(height: 40),
             Header(),
-            const SizedBox(height: 20),
             ButtonWithIcon(
               icon: Icons.file_download,
               text: 'Export excel',

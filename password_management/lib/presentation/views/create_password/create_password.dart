@@ -52,9 +52,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 5),
                     Header(),
-                    const SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,

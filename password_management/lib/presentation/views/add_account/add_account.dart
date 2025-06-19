@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
+import 'package:password_management/presentation/widgets/text_area.dart';
 import 'package:password_management/presentation/widgets/text_input.dart';
 
 class AddAccount extends StatefulWidget {
@@ -14,6 +15,7 @@ class _AddAccountState extends State<AddAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -29,9 +31,7 @@ class _AddAccountState extends State<AddAccount> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 40),
                   Header(),
-                  const SizedBox(height: 20),
                   TextInput(
                     icon: Icons.apps,
                     maxLines: 1,
@@ -58,7 +58,7 @@ class _AddAccountState extends State<AddAccount> {
                     onChanged: (value) {},
                   ),
                   const SizedBox(height: 10),
-                  TextInput(
+                  TextArea(
                     icon: Icons.edit_note,
                     maxLines: 5,
                     hintText: "Notes",
