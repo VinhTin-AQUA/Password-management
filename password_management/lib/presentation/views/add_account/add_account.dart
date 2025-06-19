@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
-import 'package:password_management/presentation/widgets/button_with_icon.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 import 'package:password_management/presentation/widgets/text_area.dart';
