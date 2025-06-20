@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:password_management/core/config/supabase_postgre_env.dart';
 import 'package:password_management/core/constants/contants.dart';
 import 'package:password_management/core/utils/secure_storage_util.dart';
 import 'package:password_management/presentation/viewmodels/google_controller.dart';
@@ -15,5 +16,9 @@ class InitialApp {
   static Future<void> initControllers() async {
     Get.put(GooleController(), permanent: true);
     Get.put(PasswordController(), permanent: true);
+  }
+
+  static Future<void> initEnv() async {
+    await SupabasePostgreEnv.init();
   }
 }

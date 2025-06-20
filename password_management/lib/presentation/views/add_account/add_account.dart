@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:password_management/core/config/supabase_postgre_env.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -13,6 +14,10 @@ class AddAccount extends StatefulWidget {
 }
 
 class _AddAccountState extends State<AddAccount> {
+  void _addAccount() {
+    print(SupabasePostgreEnv.supabasePostgrePassword);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +71,12 @@ class _AddAccountState extends State<AddAccount> {
                     onChanged: (String value) {},
                   ),
                   const SizedBox(height: 10),
-                  TButton(onPressed: () {}, text: "+"),
+                  TButton(
+                    onPressed: () {
+                      _addAccount();
+                    },
+                    text: "+",
+                  ),
                 ],
               ),
             ),

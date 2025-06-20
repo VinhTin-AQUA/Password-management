@@ -19,7 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _initializeApp() async {
-    await Future.wait([InitialApp.initControllers()]);
+    WidgetsFlutterBinding.ensureInitialized();
+    
+    await Future.wait([InitialApp.initControllers(), InitialApp.initEnv()]);
 
     var isLoginGoole = GoogleSignInProvider.signedIn();
     if (isLoginGoole == false) {
@@ -41,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
