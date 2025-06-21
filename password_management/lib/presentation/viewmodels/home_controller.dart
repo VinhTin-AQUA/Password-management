@@ -20,7 +20,10 @@ class HomeController extends GetxController {
 
   Future<void> loadData() async {
     isLoading.value = true;
-    final datas = await SupabaseManager.getAll(AccountConstanst.tableName);
+    final datas = await SupabaseManager.getAll(AccountConstanst.tableName, [
+      AccountConstanst.appNameCol,
+      AccountConstanst.idCol,
+    ]);
     accounts.assignAll(
       // Dùng assignAll để cập nhật RxList
       (datas as List).map((json) => AccountModel.fromJson(json)).toList(),

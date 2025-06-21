@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class TextInput extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final IconData? icon;
   final String hintText;
-  final String? errorText; // ➕ Thêm thuộc tính báo lỗi
+  final String? errorText;
+  final String? value;
   final int maxLines;
 
   const TextInput({
@@ -14,6 +14,7 @@ class TextInput extends StatefulWidget {
     this.icon,
     this.hintText = '',
     this.errorText,
+    this.value,
     this.maxLines = 1,
   });
 
@@ -22,18 +23,28 @@ class TextInput extends StatefulWidget {
 }
 
 class _TextInputState extends State<TextInput> {
-  final _controller = TextEditingController();
+  late TextEditingController _controller;
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController(text: widget.value ?? '');
+
     _focusNode.addListener(() {
       setState(() {
         _isFocused = _focusNode.hasFocus;
       });
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant TextInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value && widget.value != _controller.text) {
+      _controller.text = widget.value ?? '';
+    }
   }
 
   @override
@@ -81,7 +92,7 @@ class _TextInputState extends State<TextInput> {
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: Row(
               children: [
-                if (widget.icon != null) Icon(widget.icon,),
+                if (widget.icon != null) Icon(widget.icon),
                 if (widget.icon != null) const SizedBox(width: 8),
                 Expanded(
                   child: TextField(

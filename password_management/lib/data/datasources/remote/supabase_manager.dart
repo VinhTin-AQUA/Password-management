@@ -44,13 +44,19 @@ class SupabaseManager {
     }
   }
 
-  static Future<Map<String, dynamic>> getById(Object id) async {
-    final data = await _client.from('todos').select().eq('id', id).single();
+  static Future<Map<String, dynamic>> getById(
+    String tableName,
+    Object id,
+  ) async {
+    final data = await _client.from(tableName).select().eq('id', id).single();
     return data;
   }
 
-  static Future<List<Map<String, dynamic>>> getAll(String tableName) async {
-    final response = await _client.from(tableName).select();
+  static Future<List<Map<String, dynamic>>> getAll(
+    String tableName, [
+    List<String> names = const [],
+  ]) async {
+    final response = await _client.from(tableName).select(names.join(", "));
     return response;
   }
 

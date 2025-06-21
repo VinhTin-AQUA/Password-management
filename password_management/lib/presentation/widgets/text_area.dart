@@ -5,7 +5,8 @@ class TextArea extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final IconData? icon;
   final String hintText;
-  final String? errorText; // ➕ Thêm thuộc tính báo lỗi
+  final String? errorText;
+  final String? value;
   final int maxLines;
 
   const TextArea({
@@ -14,6 +15,7 @@ class TextArea extends StatefulWidget {
     this.icon,
     this.hintText = '',
     this.errorText,
+    this.value,
     this.maxLines = 1,
   });
 
@@ -22,18 +24,29 @@ class TextArea extends StatefulWidget {
 }
 
 class _TextAreaState extends State<TextArea> {
-  final _controller = TextEditingController();
+  late TextEditingController _controller;
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController(text: widget.value ?? '');
+
     _focusNode.addListener(() {
       setState(() {
         _isFocused = _focusNode.hasFocus;
       });
     });
+  }
+  
+  
+  @override
+  void didUpdateWidget(covariant TextArea oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value && widget.value != _controller.text) {
+      _controller.text = widget.value ?? '';
+    }
   }
 
   @override

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/google_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
-import 'package:password_management/presentation/views/home/widgets/item_password.dart';
+import 'package:password_management/presentation/views/home/widgets/item_account.dart';
 import 'package:password_management/presentation/views/home/widgets/menu_bottom_bar.dart';
 import 'package:password_management/presentation/views/home/widgets/t_search_bar.dart';
 import 'package:password_management/presentation/views/home/widgets/user_info.dart';
@@ -56,8 +57,11 @@ class _HomeState extends State<Home> {
                   return ListView.builder(
                     itemCount: homeController.accounts.length,
                     itemBuilder: (context, index) {
-                      return ItemPassword(
+                      return AccountItem(
                         label: homeController.accounts[index].appName,
+                        onTap: () {
+                          Get.toNamed(TRoutes.editAccount, arguments: homeController.accounts[index].id);
+                        },
                       );
                     },
                   );

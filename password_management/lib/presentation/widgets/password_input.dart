@@ -5,7 +5,8 @@ class PasswordInputField extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final IconData? icon;
   final String hintText;
-  final String? errorText; // ➕ Thêm thuộc tính báo lỗi
+  final String? errorText;
+  final String? value;
 
   const PasswordInputField({
     super.key,
@@ -13,6 +14,7 @@ class PasswordInputField extends StatefulWidget {
     this.icon,
     this.hintText = '',
     this.errorText,
+    this.value,
   });
 
   @override
@@ -21,18 +23,28 @@ class PasswordInputField extends StatefulWidget {
 
 class _PasswordInputFieldState extends State<PasswordInputField> {
   bool _obscureText = true;
-  final _controller = TextEditingController();
+  late TextEditingController _controller;
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController(text: widget.value ?? '');
+
     _focusNode.addListener(() {
       setState(() {
         _isFocused = _focusNode.hasFocus;
       });
     });
+  }
+  
+  @override
+  void didUpdateWidget(covariant PasswordInputField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value && widget.value != _controller.text) {
+      _controller.text = widget.value ?? '';
+    }
   }
 
   @override

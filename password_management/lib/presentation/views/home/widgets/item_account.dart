@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ItemPassword extends StatelessWidget {
+class AccountItem extends StatelessWidget {
   final String label;
+  final VoidCallback? onTap;
 
-  const ItemPassword({super.key, required this.label});
+  const AccountItem({super.key, required this.label, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +14,11 @@ class ItemPassword extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 1), // ⬅ tăng thêm độ cao
+        padding: const EdgeInsets.symmetric(vertical: 1),
         child: ListTile(
+          onTap: onTap,
           contentPadding: EdgeInsets.only(left: 16, right: 8),
-          visualDensity: VisualDensity(
-            vertical: 0.5,
-          ), // ⬅ hoặc bỏ nếu dùng padding trên
+          visualDensity: VisualDensity(vertical: 0.5),
           leading: CircleAvatar(
             backgroundColor: Colors.grey[200],
             child: Icon(Icons.lock, color: Colors.black54),
