@@ -13,9 +13,8 @@ class InitialApp {
     return isCreatePassword;
   }
 
-  static Future<void> initControllers() async {
-    Get.put(GooleController(), permanent: true);
-    Get.put(PasswordController(), permanent: true);
+  static void initControllers() {
+    Get.put(GoogleController(), permanent: true);
   }
 
   static Future<void> initEnv() async {

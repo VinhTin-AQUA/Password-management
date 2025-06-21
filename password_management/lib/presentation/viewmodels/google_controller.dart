@@ -5,7 +5,7 @@ import 'package:password_management/data/models/google_user_info.dart';
 import 'package:password_management/data/providers/google_signin_provider.dart';
 import 'package:get/get.dart';
 
-class GooleController extends GetxController {
+class GoogleController extends GetxController {
   FirebaseUserInfo firebaseUserInfo = FirebaseUserInfo();
   GoogleUserInfo googleUserInfo = GoogleUserInfo();
 

@@ -13,7 +13,7 @@ class SupabaseManager {
     );
   }
 
-  static final SupabaseClient client = Supabase.instance.client;
+  static final SupabaseClient _client = Supabase.instance.client;
 
   // static Future<void> _auth() async {
   //   // Đăng ký với email và password
@@ -37,7 +37,7 @@ class SupabaseManager {
 
   static Future<bool> insert(String tableName, dynamic data) async {
     try {
-      await client.from(tableName).insert(data);
+      await _client.from(tableName).insert(data);
       return true;
     } catch (ex) {
       return false;
@@ -45,23 +45,23 @@ class SupabaseManager {
   }
 
   static Future<Map<String, dynamic>> getById(Object id) async {
-    final data = await client.from('todos').select().eq('id', id).single();
+    final data = await _client.from('todos').select().eq('id', id).single();
     return data;
   }
 
-  static Future<void> getAll() async {
-    // Lấy tất cả bản ghi từ bảng 'products'
-    final response = await client.from('products').select();
+  static Future<List<Map<String, dynamic>>> getAll(String tableName) async {
+    final response = await _client.from(tableName).select();
+    return response;
   }
 
   static Future<void> update(Object id) async {
     // Cập nhật dữ liệu
-    await client.from('todos').update({'is_complete': true}).eq('id', 1);
+    await _client.from('todos').update({'is_complete': true}).eq('id', 1);
   }
 
   static Future<void> delete(Object id) async {
     // Xoá dữ liệu
-    await client.from('todos').delete().eq('id', 1);
+    await _client.from('todos').delete().eq('id', 1);
   }
 
   //Lắng nghe thay đổi realtime

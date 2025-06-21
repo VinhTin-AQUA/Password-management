@@ -21,8 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
-
-    await Future.wait([InitialApp.initControllers(), InitialApp.initEnv()]);
+    
+    InitialApp.initControllers();
+    await Future.wait([InitialApp.initEnv()]);
     await SupabaseManager.initialize();
 
     var isLoginGoole = GoogleSignInProvider.signedIn();

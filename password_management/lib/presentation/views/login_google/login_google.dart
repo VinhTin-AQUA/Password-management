@@ -12,7 +12,7 @@ class LoginGoogle extends StatefulWidget {
 }
 
 class _LoginGoogleState extends State<LoginGoogle> {
-  Future<void> _handleSignIn(GooleController builder) async {
+  Future<void> _handleSignIn(GoogleController builder) async {
     final check = await builder.loginGoogle();
 
     if (check == false) {
@@ -30,7 +30,7 @@ class _LoginGoogleState extends State<LoginGoogle> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GooleController>(
+    return GetBuilder<GoogleController>(
       builder: (builder) {
         return Scaffold(
           body: SafeArea(

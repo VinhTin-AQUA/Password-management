@@ -16,9 +16,22 @@ class LoginApp extends StatefulWidget {
 
 class _LoginAppState extends State<LoginApp> {
   bool validPassword = true;
+  late final PasswordController controller; // Khai báo controller
 
-  Future<void> _login(PasswordController builder) async {
-    final check = await builder.loginApp();
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(PasswordController());
+  }
+
+  @override
+  void dispose() {
+    Get.delete<PasswordController>();
+    super.dispose();
+  }
+
+  Future<void> _login() async {
+    final check = await controller.loginApp();
     setState(() {
       validPassword = true;
     });
@@ -33,61 +46,52 @@ class _LoginAppState extends State<LoginApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PasswordController>(
-      builder: (builder) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Header(),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            Logo(size: 150),
-                            const SizedBox(height: 20),
-                            const Text(
-                              'Login APP',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            const SizedBox(height: 40),
-                            PasswordInputField(
-                              hintText: 'Input password',
-                              onChanged: builder.updatePassword,
-                              errorText:
-                                  validPassword == true
-                                      ? null
-                                      : "Invalid Password",
-                            ),
-                            const SizedBox(height: 20),
-                            const SizedBox(height: 20),
-                            TButton(
-                              text: 'Login',
-                              onPressed: () async {
-                                await _login(builder);
-                              },
-                            ),
-                          ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Header(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        Logo(size: 150),
+                        const SizedBox(height: 20),
+                        const Text('Login APP', style: TextStyle(fontSize: 20)),
+                        const SizedBox(height: 40),
+                        PasswordInputField(
+                          hintText: 'Input password',
+                          onChanged: controller.updatePassword,
+                          errorText:
+                              validPassword == true ? null : "Invalid Password",
                         ),
-                      ),
+                        const SizedBox(height: 20),
+                        const SizedBox(height: 20),
+                        TButton(
+                          text: 'Login',
+                          onPressed: () async {
+                            await _login();
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

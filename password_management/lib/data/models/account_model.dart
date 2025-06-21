@@ -17,11 +17,11 @@ class AccountModel {
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
     return AccountModel(
-      id: json['id'],
-      appName: json['appName'],
-      userName: json['userName'],
-      password: json['password'],
-      note: json['note'],
+      id: json[AccountConstanst.idCol],
+      appName: json[AccountConstanst.appNameCol],
+      userName: json[AccountConstanst.userNameCol],
+      password: json[AccountConstanst.passwordCol],
+      note: json[AccountConstanst.noteCol],
     );
   }
 }
