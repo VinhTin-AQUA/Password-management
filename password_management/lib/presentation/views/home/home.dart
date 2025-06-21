@@ -31,24 +31,6 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  final List<String> mockSites = [
-    'example.com',
-    'flutter.dev',
-    'github.com',
-    'stackoverflow.com',
-    'google.com',
-    'example.com',
-    'flutter.dev',
-    'github.com',
-    'stackoverflow.com',
-    'google.com',
-    'example.com',
-    'flutter.dev',
-    'github.com',
-    'stackoverflow.com',
-    'google.com',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,24 +41,27 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               UserInfo(
-                // name: googleController.googleUserInfo.displayName,
-                // photoUrl: googleController.googleUserInfo.photoURL,
-                name: '',
-                photoUrl: '',
+                name: googleController.googleUserInfo.displayName,
+                photoUrl: googleController.googleUserInfo.photoURL,
               ),
               const SizedBox(height: 8),
               const SizedBox(height: 16),
               TSearchBar(),
               const SizedBox(height: 16),
               Expanded(
-                child: ListView.builder(
-                  itemCount: homeController.accounts.length,
-                  itemBuilder: (context, index) {
-                    return ItemPassword(
-                      label: homeController.accounts[index].appName,
-                    );
-                  },
-                ),
+                child: Obx(() {
+                  if (homeController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.builder(
+                    itemCount: homeController.accounts.length,
+                    itemBuilder: (context, index) {
+                      return ItemPassword(
+                        label: homeController.accounts[index].appName,
+                      );
+                    },
+                  );
+                }),
               ),
               MenuBottomBar(),
             ],
