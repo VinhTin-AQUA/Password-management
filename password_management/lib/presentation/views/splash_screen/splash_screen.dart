@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/core/init/initial_app.dart';
+import 'package:password_management/data/datasources/remote/supabase_manager.dart';
 import 'package:password_management/data/providers/google_signin_provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,8 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
-    
+
     await Future.wait([InitialApp.initControllers(), InitialApp.initEnv()]);
+    await SupabaseManager.initialize();
 
     var isLoginGoole = GoogleSignInProvider.signedIn();
     if (isLoginGoole == false) {
