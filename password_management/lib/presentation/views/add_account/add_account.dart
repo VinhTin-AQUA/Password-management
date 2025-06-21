@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/add_account_controller.dart';
+import 'package:password_management/presentation/widgets/notice_modal.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -23,7 +24,25 @@ class _AddAccountState extends State<AddAccount> {
     }
 
     var r = await builder.saveAccountModel();
-    print(r);
+    if (r == true) {
+      if (mounted) {
+        showCustomDialog(
+          context: context,
+          title: "Success",
+          message: "Add account successfully",
+          status: AlertStatus.success,
+        );
+      }
+    } else {
+      if (mounted) {
+        showCustomDialog(
+          context: context,
+          title: "Failed",
+          message: "Something error",
+          status: AlertStatus.error,
+        );
+      }
+    }
   }
 
   @override
