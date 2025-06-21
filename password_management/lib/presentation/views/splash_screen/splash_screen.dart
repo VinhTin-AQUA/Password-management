@@ -27,19 +27,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
     var isLoginGoole = GoogleSignInProvider.signedIn();
     if (isLoginGoole == false) {
-      TRoutes.offAll(TRoutes.loginGoole);
+      Get.offAllNamed(TRoutes.loginGoole);
       return;
     }
 
     var isCreatePassword = await InitialApp.checkCreatePassword();
     if (isCreatePassword == false) {
-      TRoutes.offAll(TRoutes.createPassword);
+      Get.offAllNamed(TRoutes.createPassword);
       return;
     }
 
     WidgetsBinding.instance.performReassemble();
-
-    TRoutes.offAll(TRoutes.loginApp);
+    Get.offAllNamed(TRoutes.loginApp);
   }
 
   @override

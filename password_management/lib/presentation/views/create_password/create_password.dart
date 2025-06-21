@@ -37,7 +37,7 @@ class _CreatePasswordState extends State<CreatePassword> {
       confirmPassValid = true;
     });
     await builder.savePassword();
-    TRoutes.offAll(TRoutes.home);
+    Get.offAllNamed(TRoutes.home);
   }
 
   @override

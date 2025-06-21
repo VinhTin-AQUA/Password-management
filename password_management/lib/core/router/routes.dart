@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:password_management/presentation/viewmodels/add_account_controller.dart';
 import 'package:password_management/presentation/views/add_account/add_account.dart';
 import 'package:password_management/presentation/views/create_password/create_password.dart';
 import 'package:password_management/presentation/views/home/home.dart';
@@ -41,6 +42,7 @@ class TRoutes {
       page: () => AddAccount(),
       transition: Transition.fadeIn,
       transitionDuration: Duration(milliseconds: 100),
+      binding: AddAccountBinding(),
       curve: Curves.easeOut,
     ),
     GetPage(
@@ -72,63 +74,4 @@ class TRoutes {
       curve: Curves.easeOut,
     ),
   ];
-
-  static void offAll(String routeName) {
-    switch (routeName) {
-      case home:
-        Get.offAll(
-          () => Home(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-      case loginGoole:
-        Get.offAll(
-          () => LoginGoogle(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-      case createPassword:
-        Get.offAll(
-          () => CreatePassword(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-      case loginApp:
-        Get.offAll(
-          () => LoginApp(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-      default:
-    }
-  }
-
-  static void to(String routeName) {
-    switch (routeName) {
-      case addAccount:
-        Get.to(
-          () => AddAccount(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-      case settings:
-        Get.to(
-          () => Settings(),
-          transition: Transition.fadeIn,
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeOut,
-        );
-        break;
-    }
-  }
 }

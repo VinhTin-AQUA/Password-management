@@ -23,14 +23,12 @@ class _LoginAppState extends State<LoginApp> {
       validPassword = true;
     });
     if (check == true) {
-      TRoutes.offAll(TRoutes.home);
+      Get.offAllNamed(TRoutes.home);
       return;
     }
     setState(() {
       validPassword = false;
     });
-    print(check);
-    print(validPassword);
   }
 
   @override

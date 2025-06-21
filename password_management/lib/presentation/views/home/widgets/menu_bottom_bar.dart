@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 
 class MenuBottomBar extends StatelessWidget {
@@ -10,11 +11,11 @@ class MenuBottomBar extends StatelessWidget {
       MenuItemData(icon: Icons.home, onPressed: () => {}),
       MenuItemData(
         icon: Icons.add,
-        onPressed: () => TRoutes.to(TRoutes.addAccount),
+        onPressed: () => Get.toNamed(TRoutes.addAccount),
       ),
       MenuItemData(
         icon: Icons.settings,
-        onPressed: () => TRoutes.to(TRoutes.settings),
+        onPressed: () => Get.toNamed(TRoutes.settings),
       ),
     ];
 

@@ -21,11 +21,11 @@ class _LoginGoogleState extends State<LoginGoogle> {
 
     var isCreatePassword = await InitialApp.checkCreatePassword();
     if (isCreatePassword == false) {
-      TRoutes.offAll(TRoutes.createPassword);
+      Get.offAllNamed(TRoutes.createPassword);
       return;
     }
 
-    TRoutes.offAll(TRoutes.loginApp);
+    Get.offAllNamed(TRoutes.loginApp);
   }
 
   @override
