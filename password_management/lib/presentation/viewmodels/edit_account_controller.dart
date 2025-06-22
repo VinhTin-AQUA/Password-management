@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/constants/account_constanst.dart';
+import 'package:password_management/core/utils/aes_util.dart';
 import 'package:password_management/data/common/error_model.dart';
 import 'package:password_management/data/datasources/remote/supabase_manager.dart';
 import 'package:password_management/data/models/account_model.dart';
+import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class EditAccountController extends GetxController {
   var editAccountModel = Rx<EditAccountModel>(
@@ -33,13 +35,16 @@ class EditAccountController extends GetxController {
 
   Future<void> getData(String id) async {
     final data = await SupabaseManager.getById(AccountConstanst.tableName, id);
+    final googleControler = Get.find<GoogleController>();
+    String myKey = googleControler.googleUserInfo.uid;
+    
     editAccountModel.update((val) {
       final r = EditAccountModel.fromJson(data);
-      val?.appName = r.appName;
-      val?.userName = r.userName;
-      val?.password = r.password;
-      val?.confirmPassword = r.password;
-      val?.note = r.note;
+      val?.appName = AesUtil.decryptData(r.appName, myKey);
+      val?.userName = AesUtil.decryptData(r.userName, myKey);
+      val?.password = AesUtil.decryptData(r.password, myKey);
+      val?.confirmPassword = AesUtil.decryptData(r.password, myKey);
+      val?.note = AesUtil.decryptData(r.note, myKey);
       val?.id = r.id;
     });
   }

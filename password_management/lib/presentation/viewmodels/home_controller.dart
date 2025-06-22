@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/constants/account_constanst.dart';
+import 'package:password_management/core/utils/aes_util.dart';
 import 'package:password_management/data/datasources/remote/supabase_manager.dart';
 import 'package:password_management/data/models/account_model.dart';
+import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class HomeController extends GetxController {
   List<AccountModel> originalAccounts = [];
@@ -32,9 +34,24 @@ class HomeController extends GetxController {
       AccountConstanst.appNameCol,
       AccountConstanst.idCol,
     ]);
+
+    final googleControler = Get.find<GoogleController>();
+    String myKey = googleControler.googleUserInfo.uid;
     accounts.assignAll(
       // Dùng assignAll để cập nhật RxList
-      (datas as List).map((json) => AccountModel.fromJson(json)).toList(),
+      (datas as List).map((json) {
+        final encryptData = {
+          AccountConstanst.appNameCol: AesUtil.decryptData(
+            json[AccountConstanst.appNameCol],
+            myKey,
+          ),
+          AccountConstanst.idCol: json[AccountConstanst.idCol],
+        };
+
+        print(encryptData);
+
+        return AccountModel.fromJson(encryptData);
+      }).toList(),
     );
     originalAccounts = accounts.toList();
     isLoading.value = false;
