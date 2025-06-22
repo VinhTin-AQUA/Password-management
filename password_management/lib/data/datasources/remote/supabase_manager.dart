@@ -35,12 +35,12 @@ class SupabaseManager {
   //   final user = client.auth.currentUser;
   // }
 
-  static Future<bool> insert(String tableName, dynamic data) async {
+  static Future<Map<String, dynamic>?> insert(String tableName, dynamic data) async {
     try {
-      await _client.from(tableName).insert(data);
-      return true;
+      final r = await _client.from(tableName).insert(data).select();
+      return r[0];
     } catch (ex) {
-      return false;
+      return null;
     }
   }
 

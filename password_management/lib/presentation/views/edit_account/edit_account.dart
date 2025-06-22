@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/edit_account_controller.dart';
+import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/notice_modal.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
@@ -17,7 +18,6 @@ class EditAccount extends StatefulWidget {
 
 class _EditAccountState extends State<EditAccount> {
   final editAccountController = Get.put(EditAccountController());
-  final arguments = Get.arguments;
   late String id;
 
   @override
@@ -35,7 +35,6 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<void> _updateAccount() async {
     final checkError = editAccountController.checkValidData();
-    print(checkError);
     if (checkError == false) {
       return;
     }
@@ -50,6 +49,12 @@ class _EditAccountState extends State<EditAccount> {
           status: AlertStatus.success,
         );
       }
+
+      final homeController = Get.find<HomeController>();
+      homeController.updateElement(
+        id,
+        editAccountController.editAccountModel.value.toJson(),
+      );
     } else {
       if (mounted) {
         showCustomDialog(

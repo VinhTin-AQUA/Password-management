@@ -12,7 +12,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: TRoutes.getInitialRoute(),
       getPages: TRoutes.generateRoute(),
+      theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.red, // Màu con trỏ
+          selectionColor: Colors.limeAccent[400], // Vùng bôi đen
+          selectionHandleColor: Colors.red, // Nút tròn khi kéo bôi
+        ),
+      ),
     );
   }
 }
-

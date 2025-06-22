@@ -4,7 +4,7 @@ import 'package:password_management/data/datasources/remote/supabase_manager.dar
 import 'package:password_management/data/models/account_model.dart';
 
 class HomeController extends GetxController {
-  List<AccountModel> accounts = <AccountModel>[].obs;
+  var accounts = <AccountModel>[].obs;
   final isLoading = false.obs;
 
   @override
@@ -12,6 +12,13 @@ class HomeController extends GetxController {
     super.onInit();
     loadData();
   }
+
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  //   print(123);
+  //   loadData(); // chạy lại mỗi khi quay lại màn hình này
+  // }
 
   // @override
   // void onClose() {
@@ -29,5 +36,19 @@ class HomeController extends GetxController {
       (datas as List).map((json) => AccountModel.fromJson(json)).toList(),
     );
     isLoading.value = false;
+  }
+
+  void addElement(AccountModel element) {
+    accounts.add(element);
+    accounts.refresh();
+  }
+
+  void updateElement(String id, dynamic data) {
+    final account = accounts.firstWhere((u) => u.id == id);
+    account.appName = data[AccountConstanst.appNameCol] ?? '';
+    account.userName = data[AccountConstanst.userNameCol] ?? '';
+    account.password = data[AccountConstanst.passwordCol] ?? '';
+    account.note = data[AccountConstanst.noteCol] ?? '';
+    accounts.refresh();
   }
 }

@@ -60,7 +60,10 @@ class _HomeState extends State<Home> {
                       return AccountItem(
                         label: homeController.accounts[index].appName,
                         onTap: () {
-                          Get.toNamed(TRoutes.editAccount, arguments: homeController.accounts[index].id);
+                          Get.toNamed(
+                            TRoutes.editAccount,
+                            arguments: homeController.accounts[index].id,
+                          );
                         },
                       );
                     },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/add_account_controller.dart';
+import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/notice_modal.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
@@ -23,8 +24,8 @@ class _AddAccountState extends State<AddAccount> {
       return;
     }
 
-    var r = await builder.saveAccountModel();
-    if (r == true) {
+    var newAccount = await builder.saveAccountModel();
+    if (newAccount != null) {
       if (mounted) {
         showCustomDialog(
           context: context,
@@ -33,6 +34,9 @@ class _AddAccountState extends State<AddAccount> {
           status: AlertStatus.success,
         );
       }
+
+      final homeController = Get.find<HomeController>();
+      homeController.addElement(newAccount);
     } else {
       if (mounted) {
         showCustomDialog(

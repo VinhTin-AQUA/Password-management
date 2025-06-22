@@ -110,12 +110,15 @@ class AddAccountController extends GetxController {
         checkConfirmPassword == true;
   }
 
-  Future<bool> saveAccountModel() async {
-    final r = SupabaseManager.insert(
+  Future<AccountModel?> saveAccountModel() async {
+    final r = await SupabaseManager.insert(
       AccountConstanst.tableName,
       addAccountModel.toJson(),
     );
-    return r;
+    if (r == null) {
+      return null;
+    }
+    return AccountModel.fromJson(r);
   }
 }
 
