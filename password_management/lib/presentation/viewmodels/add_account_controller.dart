@@ -99,10 +99,15 @@ class AddAccountController extends GetxController {
   }
 
   bool checkValidData() {
-    return _checkAppName() == true &&
-        _checkUserName() == true &&
-        _checkPassword() == true &&
-        _checkConfirmPassword() == true;
+    final checkAppName = _checkAppName();
+    final checkUserName = _checkUserName();
+    final checkPassword = _checkPassword();
+    final checkConfirmPassword = _checkConfirmPassword();
+
+    return checkAppName == true &&
+        checkUserName == true &&
+        checkPassword == true &&
+        checkConfirmPassword == true;
   }
 
   Future<bool> saveAccountModel() async {

@@ -60,9 +60,17 @@ class SupabaseManager {
     return response;
   }
 
-  static Future<void> update(Object id) async {
-    // Cập nhật dữ liệu
-    await _client.from('todos').update({'is_complete': true}).eq('id', 1);
+  static Future<bool> update(
+    String tableName,
+    Object id,
+    dynamic newData,
+  ) async {
+    try {
+      await _client.from(tableName).update(newData).eq('id', id);
+      return true;
+    } catch (ex) {
+      return false;
+    }
   }
 
   static Future<void> delete(Object id) async {

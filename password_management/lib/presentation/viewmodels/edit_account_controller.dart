@@ -66,64 +66,91 @@ class EditAccountController extends GetxController {
 
   bool _checkAppName() {
     if (editAccountModel.value.appName != '') {
-      appNameError.value.errorMessage = '';
-      appNameError.value.isValid = true;
+      appNameError.value =
+          ErrorModel()
+            ..errorMessage = ''
+            ..isValid = true;
       return true;
     }
 
-    appNameError.value.errorMessage = 'App Name is not empty';
-    appNameError.value.isValid = false;
+    appNameError.value =
+        ErrorModel()
+          ..errorMessage = 'App Name is not empty'
+          ..isValid = false;
+
     return false;
   }
 
   bool _checkUserName() {
     if (editAccountModel.value.userName != '') {
-      userNameError.value.errorMessage = '';
-      userNameError.value.isValid = true;
+      userNameError.value =
+          ErrorModel()
+            ..errorMessage = ''
+            ..isValid = true;
       return true;
     }
-
-    userNameError.value.errorMessage = 'User Name is not empty';
-    userNameError.value.isValid = false;
+    userNameError.value =
+        ErrorModel()
+          ..errorMessage = 'User Name is not empty'
+          ..isValid = false;
     return false;
   }
 
   bool _checkPassword() {
     if (editAccountModel.value.password != '') {
-      passwordError.value.errorMessage = '';
-      passwordError.value.isValid = true;
+      passwordError.value =
+          ErrorModel()
+            ..errorMessage = ''
+            ..isValid = true;
       return true;
     }
-
-    passwordError.value.errorMessage = 'Password is not empty';
-    passwordError.value.isValid = false;
+    passwordError.value =
+        ErrorModel()
+          ..errorMessage = 'Password is not empty'
+          ..isValid = false;
     return false;
   }
 
   bool _checkConfirmPassword() {
     if (editAccountModel.value.confirmPassword == '') {
-      confirmPasswordError.value.errorMessage = 'Confirm Password is not empty';
-      confirmPasswordError.value.isValid = false;
+      confirmPasswordError.value =
+          ErrorModel()
+            ..errorMessage = 'Confirm Password is not empty'
+            ..isValid = false;
       return false;
     } else if (editAccountModel.value.confirmPassword !=
         editAccountModel.value.password) {
-      confirmPasswordError.value.errorMessage = 'Confirm Password is not match';
-      confirmPasswordError.value.isValid = false;
+      confirmPasswordError.value =
+          ErrorModel()
+            ..errorMessage = 'Confirm Password is not match'
+            ..isValid = false;
       return false;
     }
-    confirmPasswordError.value.errorMessage = '';
-    confirmPasswordError.value.isValid = true;
+    confirmPasswordError.value =
+        ErrorModel()
+          ..errorMessage = ''
+          ..isValid = true;
     return true;
   }
 
   bool checkValidData() {
-    return _checkAppName() == true &&
-        _checkUserName() == true &&
-        _checkPassword() == true &&
-        _checkConfirmPassword() == true;
+    final checkAppName = _checkAppName();
+    final checkUserName = _checkUserName();
+    final checkPassword = _checkPassword();
+    final checkConfirmPassword = _checkConfirmPassword();
+
+    return checkAppName == true &&
+        checkUserName == true &&
+        checkPassword == true &&
+        checkConfirmPassword == true;
   }
 
   Future<bool> updateAccountModel() async {
-    return true;
+    final check = await SupabaseManager.update(
+      AccountConstanst.tableName,
+      editAccountModel.value.id,
+      editAccountModel.value.toJson(),
+    );
+    return check;
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/instance_manager.dart';
 import 'package:password_management/presentation/viewmodels/edit_account_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/notice_modal.dart';
@@ -36,34 +34,32 @@ class _EditAccountState extends State<EditAccount> {
   }
 
   Future<void> _updateAccount() async {
-    print(editAccountController.editAccountModel.value.appName);
-    print(id);
-    // final checkError = editAccountController.checkValidData();
+    final checkError = editAccountController.checkValidData();
+    print(checkError);
+    if (checkError == false) {
+      return;
+    }
 
-    // if (checkError == false) {
-    //   return;
-    // }
-
-    // var r = await editAccountController.updateAccountModel();
-    // if (r == true) {
-    //   if (mounted) {
-    //     showCustomDialog(
-    //       context: context,
-    //       title: "Success",
-    //       message: "Add account successfully",
-    //       status: AlertStatus.success,
-    //     );
-    //   }
-    // } else {
-    //   if (mounted) {
-    //     showCustomDialog(
-    //       context: context,
-    //       title: "Failed",
-    //       message: "Something error",
-    //       status: AlertStatus.error,
-    //     );
-    //   }
-    // }
+    var r = await editAccountController.updateAccountModel();
+    if (r == true) {
+      if (mounted) {
+        showCustomDialog(
+          context: context,
+          title: "Success",
+          message: "Update account successfully",
+          status: AlertStatus.success,
+        );
+      }
+    } else {
+      if (mounted) {
+        showCustomDialog(
+          context: context,
+          title: "Failed",
+          message: "Something error",
+          status: AlertStatus.error,
+        );
+      }
+    }
   }
 
   @override
