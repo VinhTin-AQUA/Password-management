@@ -36,6 +36,12 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+
+            // Tắt việc kiểm tra debug để file APK tối ưu
+            minifyEnabled true
+            shrinkResources false
+            // Chỉ định file proguard (nếu cần)
+            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
