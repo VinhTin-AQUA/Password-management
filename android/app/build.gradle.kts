@@ -35,13 +35,24 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig = signingConfigs.getByName("debug")   
+        }
+
+        getByName("release") {
+            // Dùng key debug tạm thời để ký bản release
             signingConfig = signingConfigs.getByName("debug")
 
-            // Tắt việc kiểm tra debug để file APK tối ưu
-            minifyEnabled true
-            shrinkResources false
-            // Chỉ định file proguard (nếu cần)
-            // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Bật R8/proguard để rút gọn code
+            isMinifyEnabled = true
+
+            // Không bật rút gọn tài nguyên (có thể bật nếu bạn cần giảm kích thước APK)
+            isShrinkResources = false
+
+            // Sử dụng proguard file mặc định + file custom nếu có
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
