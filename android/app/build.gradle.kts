@@ -49,10 +49,10 @@ android {
             isShrinkResources = false
 
             // Sử dụng proguard file mặc định + file custom nếu có
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            // proguardFiles(
+                // getDefaultProguardFile("proguard-android-optimize.txt"),
+                // "proguard-rules.pro"
+            // )
         }
     }
 }

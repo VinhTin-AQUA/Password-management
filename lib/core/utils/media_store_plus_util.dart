@@ -17,13 +17,12 @@ class MediaStorePlusUtil {
       if (r == null) {
         return false;
       }
- 
+
       if (await file.exists()) {
         await file.delete();
       }
       return r.isSuccessful;
     } catch (ex) {
-      //
       return false;
     }
   }
