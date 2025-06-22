@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:password_management/presentation/widgets/delete_account_modal.dart';
+import 'package:password_management/presentation/widgets/show_delete_dialog.dart';
 
 class AccountItem extends StatelessWidget {
   final String label;
@@ -16,7 +16,7 @@ class AccountItem extends StatelessWidget {
   void onSelected(String value) {
     switch (value) {
       case 'delete':
-        showDeleteConfirmationDialog(
+        showDeleteDialog(
           onConfirm: () async {
             if (onDelete != null) {
               await onDelete!();

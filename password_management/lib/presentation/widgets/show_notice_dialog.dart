@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum AlertStatus { success, error }
 
-void showCustomDialog({
+void showNoticeDialog({
   required BuildContext context,
   required String title,
   required String message,

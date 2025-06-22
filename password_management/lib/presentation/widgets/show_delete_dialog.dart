@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<void> showDeleteConfirmationDialog({
+Future<void> showDeleteDialog({
   required Future<void> Function()? onConfirm,
   String title = 'Confirm',
   String message = 'Are you sure you want to delete this item?',
@@ -14,10 +14,22 @@ Future<void> showDeleteConfirmationDialog({
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       content: Text(message),
       actions: [
-        TextButton(
-          onPressed: () => Get.back(), // Đóng dialog
-          child: Text(cancelText),
+        
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: Colors.red, // Màu viền
+                width: 2, // Độ dày viền
+              ),
+            ),
+          ),
+          onPressed: () => Get.back(),
+          child: Text(cancelText, style: TextStyle(color: Colors.red)),
         ),
+
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
@@ -31,7 +43,7 @@ Future<void> showDeleteConfirmationDialog({
               await onConfirm();
             }
           },
-          child: Text(confirmText),
+          child: Text(confirmText, style: TextStyle(color: Colors.white)),
         ),
       ],
     ),

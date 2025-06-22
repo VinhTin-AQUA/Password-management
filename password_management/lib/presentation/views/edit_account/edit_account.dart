@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/edit_account_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
-import 'package:password_management/presentation/widgets/notice_modal.dart';
+import 'package:password_management/presentation/widgets/loading_dialog.dart';
+import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/text_area.dart';
@@ -38,11 +39,12 @@ class _EditAccountState extends State<EditAccount> {
     if (checkError == false) {
       return;
     }
-
+    LoadingDialog.show();
     var r = await editAccountController.updateAccountModel();
+    LoadingDialog.hide();
     if (r == true) {
       if (mounted) {
-        showCustomDialog(
+        showNoticeDialog(
           context: context,
           title: "Success",
           message: "Update account successfully",
@@ -57,7 +59,7 @@ class _EditAccountState extends State<EditAccount> {
       );
     } else {
       if (mounted) {
-        showCustomDialog(
+        showNoticeDialog(
           context: context,
           title: "Failed",
           message: "Something error",
