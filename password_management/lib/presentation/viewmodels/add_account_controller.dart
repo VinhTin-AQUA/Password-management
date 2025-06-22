@@ -13,6 +13,7 @@ class AddAccountController extends GetxController {
     password: '',
     confirmPassword: '',
     userName: '',
+    userId: '',
   );
 
   ErrorModel appNameError = ErrorModel();
@@ -133,6 +134,7 @@ class AddAccountController extends GetxController {
         addAccountModel.note,
         myKey,
       ),
+      AccountConstanst.userId: myKey,
     };
 
     final r = await SupabaseManager.insert(
@@ -148,6 +150,7 @@ class AddAccountController extends GetxController {
       AccountConstanst.userNameCol: addAccountModel.userName,
       AccountConstanst.passwordCol: addAccountModel.password,
       AccountConstanst.noteCol: addAccountModel.note,
+      AccountConstanst.userId: myKey,
     });
   }
 }

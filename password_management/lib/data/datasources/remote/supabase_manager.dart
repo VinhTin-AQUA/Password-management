@@ -47,38 +47,58 @@ class SupabaseManager {
     }
   }
 
-  static Future<Map<String, dynamic>> getById(
+  static Future<Map<String, dynamic>> findOneForUserById(
     String tableName,
     Object id,
+    Object userId,
   ) async {
-    final data = await _client.from(tableName).select().eq('id', id).single();
+    final data =
+        await _client
+            .from(tableName)
+            .select()
+            .eq('id', id)
+            .eq('userid', userId)
+            .single();
     return data;
   }
 
-  static Future<List<Map<String, dynamic>>> getAll(
-    String tableName, [
+  static Future<List<Map<String, dynamic>>> getAllForUser(
+    String tableName,
+    Object userId, [
     List<String> names = const [],
   ]) async {
-    final response = await _client.from(tableName).select(names.join(", "));
+    final response = await _client
+        .from(tableName)
+        .select(names.join(", "))
+        .eq('userid', userId);
     return response;
   }
 
-  static Future<bool> update(
+  static Future<bool> updateForUser(
     String tableName,
     Object id,
+    Object userid,
     dynamic newData,
   ) async {
     try {
-      await _client.from(tableName).update(newData).eq('id', id);
+      await _client
+          .from(tableName)
+          .update(newData)
+          .eq('id', id)
+          .eq('userid', userid);
       return true;
     } catch (ex) {
       return false;
     }
   }
 
-  static Future<bool> delete(String tableName, Object id) async {
+  static Future<bool> deleteForUser(
+    String tableName,
+    Object id,
+    Object userid,
+  ) async {
     try {
-      await _client.from(tableName).delete().eq('id', id);
+      await _client.from(tableName).delete().eq('userid', userid).eq('id', id);
       return true;
     } catch (ex) {
       return false;

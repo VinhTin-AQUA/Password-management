@@ -30,13 +30,14 @@ class HomeController extends GetxController {
 
   Future<void> loadData() async {
     isLoading.value = true;
-    final datas = await SupabaseManager.getAll(AccountConstanst.tableName, [
-      AccountConstanst.appNameCol,
-      AccountConstanst.idCol,
-    ]);
-
     final googleControler = Get.find<GoogleController>();
     String myKey = googleControler.googleUserInfo.uid;
+    final datas = await SupabaseManager.getAllForUser(
+      AccountConstanst.tableName,
+      myKey,
+      [AccountConstanst.appNameCol, AccountConstanst.idCol],
+    );
+
     accounts.assignAll(
       // Dùng assignAll để cập nhật RxList
       (datas as List).map((json) {
@@ -47,8 +48,6 @@ class HomeController extends GetxController {
           ),
           AccountConstanst.idCol: json[AccountConstanst.idCol],
         };
-
-        print(encryptData);
 
         return AccountModel.fromJson(encryptData);
       }).toList(),
@@ -75,7 +74,11 @@ class HomeController extends GetxController {
   }
 
   Future<bool> deleteElement(String id) async {
-    final check = await SupabaseManager.delete(AccountConstanst.tableName, id);
+    final check = await SupabaseManager.deleteForUser(
+      AccountConstanst.tableName,
+      id,
+      Get.find<GoogleController>().googleUserInfo.uid,
+    );
     if (check == false) {
       return check;
     }

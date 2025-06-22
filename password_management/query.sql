@@ -3,5 +3,6 @@ CREATE TABLE Accounts (
     AppName TEXT NOT NULL,
     UserName TEXT NOT NULL,
     Password TEXT NOT NULL,
-    Note TEXT
+    Note TEXT,
+    UserId TEXT NOT NULL
 );

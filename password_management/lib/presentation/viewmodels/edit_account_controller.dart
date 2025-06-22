@@ -15,6 +15,7 @@ class EditAccountController extends GetxController {
       userName: '',
       id: '',
       confirmPassword: '',
+      userId: '',
     ),
   );
 
@@ -34,10 +35,14 @@ class EditAccountController extends GetxController {
   // }
 
   Future<void> getData(String id) async {
-    final data = await SupabaseManager.getById(AccountConstanst.tableName, id);
     final googleControler = Get.find<GoogleController>();
     String myKey = googleControler.googleUserInfo.uid;
-    
+    final data = await SupabaseManager.findOneForUserById(
+      AccountConstanst.tableName,
+      id,
+      myKey,
+    );
+
     editAccountModel.update((val) {
       final r = EditAccountModel.fromJson(data);
       val?.appName = AesUtil.decryptData(r.appName, myKey);
@@ -46,6 +51,7 @@ class EditAccountController extends GetxController {
       val?.confirmPassword = AesUtil.decryptData(r.password, myKey);
       val?.note = AesUtil.decryptData(r.note, myKey);
       val?.id = r.id;
+      val?.userId = r.userId;
     });
   }
 
@@ -151,10 +157,33 @@ class EditAccountController extends GetxController {
   }
 
   Future<bool> updateAccountModel() async {
-    final check = await SupabaseManager.update(
+    String myKey = Get.find<GoogleController>().googleUserInfo.uid;
+    final encryptData = {
+      AccountConstanst.appNameCol: AesUtil.encryptData(
+        editAccountModel.value.appName,
+        myKey,
+      ),
+      AccountConstanst.userNameCol: AesUtil.encryptData(
+        editAccountModel.value.userName,
+        myKey,
+      ),
+      AccountConstanst.passwordCol: AesUtil.encryptData(
+        editAccountModel.value.password,
+        myKey,
+      ),
+      AccountConstanst.noteCol: AesUtil.encryptData(
+        editAccountModel.value.note,
+        myKey,
+      ),
+      AccountConstanst.userId: myKey,
+    };
+
+    print(encryptData);
+    final check = await SupabaseManager.updateForUser(
       AccountConstanst.tableName,
       editAccountModel.value.id,
-      editAccountModel.value.toJson(),
+      myKey,
+      encryptData,
     );
     return check;
   }

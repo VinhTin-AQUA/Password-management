@@ -5,4 +5,5 @@ class AccountConstanst {
   static const String userNameCol = "username";
   static const String passwordCol = "password";
   static const String noteCol = "note";
+  static const String userId = "userid";
 }

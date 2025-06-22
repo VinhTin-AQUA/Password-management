@@ -6,6 +6,7 @@ class AccountModel {
   String userName = '';
   String password = '';
   String note = '';
+  String userId = '';
 
   AccountModel({
     required this.id,
@@ -13,6 +14,7 @@ class AccountModel {
     required this.userName,
     required this.password,
     required this.note,
+    required this.userId,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class AccountModel {
       userName: json[AccountConstanst.userNameCol] ?? "",
       password: json[AccountConstanst.passwordCol] ?? "",
       note: json[AccountConstanst.noteCol] ?? "",
+      userId: json[AccountConstanst.userId] ?? "",
     );
   }
 }
@@ -32,6 +35,7 @@ class AddAccountModel {
   String password = '';
   String confirmPassword = '';
   String note = '';
+  String userId = '';
 
   AddAccountModel({
     required this.appName,
@@ -39,6 +43,7 @@ class AddAccountModel {
     required this.password,
     required this.confirmPassword,
     required this.note,
+    required this.userId,
   });
 
   Map<String, dynamic> toJson() {
@@ -47,6 +52,7 @@ class AddAccountModel {
       AccountConstanst.userNameCol: userName,
       AccountConstanst.passwordCol: password,
       AccountConstanst.noteCol: note,
+      AccountConstanst.userId: userId,
     };
   }
 }
@@ -58,6 +64,7 @@ class EditAccountModel {
   String password = '';
   String confirmPassword = '';
   String note = '';
+  String userId = '';
 
   EditAccountModel({
     required this.id,
@@ -66,6 +73,7 @@ class EditAccountModel {
     required this.password,
     required this.confirmPassword,
     required this.note,
+    required this.userId,
   });
 
   factory EditAccountModel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +85,7 @@ class EditAccountModel {
       password: json[AccountConstanst.passwordCol] ?? "",
       confirmPassword: json[AccountConstanst.passwordCol] ?? "",
       note: json[AccountConstanst.noteCol] ?? "",
+      userId: json[AccountConstanst.userId] ?? "",
     );
   }
 
@@ -87,6 +96,7 @@ class EditAccountModel {
       AccountConstanst.userNameCol: userName,
       AccountConstanst.passwordCol: password,
       AccountConstanst.noteCol: note,
+      AccountConstanst.userId: userId,
     };
   }
 }
