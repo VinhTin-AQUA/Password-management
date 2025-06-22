@@ -7,6 +7,7 @@ class TextInput extends StatefulWidget {
   final String? errorText;
   final String? value;
   final int maxLines;
+  final String? labelText;
 
   const TextInput({
     super.key,
@@ -15,6 +16,7 @@ class TextInput extends StatefulWidget {
     this.hintText = '',
     this.errorText,
     this.value,
+    this.labelText,
     this.maxLines = 1,
   });
 
@@ -62,6 +64,19 @@ class _TextInputState extends State<TextInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.labelText != null) // Thêm dòng này
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6, left: 4),
+            child: Text(
+              widget.labelText!,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: Colors.black87,
+                
+              ),
+            ),
+          ),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey[100],
@@ -98,14 +113,12 @@ class _TextInputState extends State<TextInput> {
                   child: TextField(
                     controller: _controller,
                     focusNode: _focusNode,
-                    onChanged: (value) {
-                      widget.onChanged(value);
-                    },
+                    onChanged: widget.onChanged,
                     maxLines: widget.maxLines,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: widget.hintText,
-                    ),
+                      hintText: '',
+                    ).copyWith(hintText: widget.hintText),
                   ),
                 ),
               ],

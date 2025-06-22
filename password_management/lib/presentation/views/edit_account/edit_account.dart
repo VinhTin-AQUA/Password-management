@@ -78,110 +78,143 @@ class _EditAccountState extends State<EditAccount> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Obx(() {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Header(),
-                    TextInput(
-                      icon: Icons.apps,
-                      maxLines: 1,
-                      hintText: "App name",
-                      value:
-                          editAccountController.editAccountModel.value.appName,
-                      onChanged: (String value) {
-                        editAccountController.updateAppName(value);
-                      },
-                      errorText:
-                          editAccountController.appNameError.value.isValid ==
-                                  false
-                              ? editAccountController
-                                  .appNameError
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Header(),
+                  Obx(() {
+                    if (editAccountController.editAccountModel.value.appName ==
+                        '') {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextInput(
+                          icon: Icons.apps,
+                          maxLines: 1,
+                          hintText: "App name",
+                          labelText: 'App name',
+                          value:
+                              editAccountController
+                                  .editAccountModel
                                   .value
-                                  .errorMessage
-                              : null,
-                    ),
-                    const SizedBox(height: 10),
-                    TextInput(
-                      icon: Icons.account_circle,
-                      maxLines: 1,
-                      hintText: "User name",
-                      value:
-                          editAccountController.editAccountModel.value.userName,
-                      onChanged: (String value) {
-                        editAccountController.updateUserName(value);
-                      },
-                      errorText:
-                          editAccountController.userNameError.value.isValid ==
-                                  false
-                              ? editAccountController
-                                  .userNameError
+                                  .appName,
+                          onChanged: (String value) {
+                            editAccountController.updateAppName(value);
+                          },
+                          errorText:
+                              editAccountController
+                                          .appNameError
+                                          .value
+                                          .isValid ==
+                                      false
+                                  ? editAccountController
+                                      .appNameError
+                                      .value
+                                      .errorMessage
+                                  : null,
+                        ),
+                        const SizedBox(height: 10),
+                        TextInput(
+                          icon: Icons.account_circle,
+                          maxLines: 1,
+                          hintText: "User name",
+                          labelText: 'User name',
+                          value:
+                              editAccountController
+                                  .editAccountModel
                                   .value
-                                  .errorMessage
-                              : null,
-                    ),
-                    const SizedBox(height: 10),
-                    PasswordInputField(
-                      icon: Icons.password,
-                      hintText: "Password",
-                      value:
-                          editAccountController.editAccountModel.value.password,
-                      onChanged: (String value) {
-                        editAccountController.updatePassword(value);
-                      },
-                      errorText:
-                          editAccountController.passwordError.value.isValid ==
-                                  false
-                              ? editAccountController
-                                  .passwordError
+                                  .userName,
+                          onChanged: (String value) {
+                            editAccountController.updateUserName(value);
+                          },
+                          errorText:
+                              editAccountController
+                                          .userNameError
+                                          .value
+                                          .isValid ==
+                                      false
+                                  ? editAccountController
+                                      .userNameError
+                                      .value
+                                      .errorMessage
+                                  : null,
+                        ),
+                        const SizedBox(height: 10),
+                        PasswordInputField(
+                          icon: Icons.password,
+                          hintText: "Password",
+                          labelText: 'Password',
+                          value:
+                              editAccountController
+                                  .editAccountModel
                                   .value
-                                  .errorMessage
-                              : null,
-                    ),
-                    const SizedBox(height: 10),
-                    PasswordInputField(
-                      icon: Icons.password,
-                      hintText: "Confirm Password",
-                      value:
-                          editAccountController
-                              .editAccountModel
-                              .value
-                              .confirmPassword,
-                      onChanged: (String value) {
-                        editAccountController.updateConfirmPassword(value);
-                      },
-                      errorText:
-                          editAccountController
+                                  .password,
+                          onChanged: (String value) {
+                            editAccountController.updatePassword(value);
+                          },
+                          errorText:
+                              editAccountController
+                                          .passwordError
+                                          .value
+                                          .isValid ==
+                                      false
+                                  ? editAccountController
+                                      .passwordError
+                                      .value
+                                      .errorMessage
+                                  : null,
+                        ),
+                        const SizedBox(height: 10),
+                        PasswordInputField(
+                          icon: Icons.password,
+                          hintText: "Confirm Password",
+                          labelText: 'Confirm Password',
+                          value:
+                              editAccountController
+                                  .editAccountModel
+                                  .value
+                                  .confirmPassword,
+                          onChanged: (String value) {
+                            editAccountController.updateConfirmPassword(value);
+                          },
+                          errorText:
+                              editAccountController
+                                          .confirmPasswordError
+                                          .value
+                                          .isValid ==
+                                      false
+                                  ? editAccountController
                                       .confirmPasswordError
                                       .value
-                                      .isValid ==
-                                  false
-                              ? editAccountController
-                                  .confirmPasswordError
-                                  .value
-                                  .errorMessage
-                              : null,
-                    ),
-                    const SizedBox(height: 10),
-                    TextArea(
-                      icon: Icons.edit_note,
-                      maxLines: 5,
-                      hintText: "Notes",
-                      value: editAccountController.editAccountModel.value.note,
-                      onChanged: (String value) {
-                        editAccountController.updateNote(value);
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TButton(
-                      onPressed: () {
-                        _updateAccount();
-                      },
-                      text: "+",
-                    ),
-                  ],
-                );
-              }),
+                                      .errorMessage
+                                  : null,
+                        ),
+                        const SizedBox(height: 10),
+                        TextArea(
+                          icon: Icons.edit_note,
+                          maxLines: 5,
+                          hintText: "Notes",
+                          labelText: 'Notes',
+                          value:
+                              editAccountController.editAccountModel.value.note,
+                          onChanged: (String value) {
+                            editAccountController.updateNote(value);
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        TButton(
+                          onPressed: () {
+                            _updateAccount();
+                          },
+                          text: "+",
+                        ),
+                      ],
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         ),

@@ -71,6 +71,7 @@ class _AddAccountState extends State<AddAccount> {
                         icon: Icons.apps,
                         maxLines: 1,
                         hintText: "App name",
+                        labelText: 'App name',
                         onChanged: (String value) {
                           builder.updateAppName(value);
                         },
@@ -87,6 +88,7 @@ class _AddAccountState extends State<AddAccount> {
                         onChanged: (String value) {
                           builder.updateUserName(value);
                         },
+                        labelText: 'User name',
                         errorText:
                             builder.userNameError.isValid == false
                                 ? builder.userNameError.errorMessage
@@ -96,6 +98,7 @@ class _AddAccountState extends State<AddAccount> {
                       PasswordInputField(
                         icon: Icons.password,
                         hintText: "Password",
+                        labelText: 'Password',
                         onChanged: (String value) {
                           builder.updatePassword(value);
                         },
@@ -108,6 +111,7 @@ class _AddAccountState extends State<AddAccount> {
                       PasswordInputField(
                         icon: Icons.password,
                         hintText: "Confirm Password",
+                        labelText: 'Confirm Password',
                         onChanged: (String value) {
                           builder.updateConfirmPassword(value);
                         },
@@ -121,6 +125,7 @@ class _AddAccountState extends State<AddAccount> {
                         icon: Icons.edit_note,
                         maxLines: 5,
                         hintText: "Notes",
+                        labelText: 'Notes',
                         onChanged: (String value) {
                           builder.updateNote(value);
                         },

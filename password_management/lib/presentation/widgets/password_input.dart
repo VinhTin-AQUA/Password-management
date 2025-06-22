@@ -7,6 +7,7 @@ class PasswordInputField extends StatefulWidget {
   final String hintText;
   final String? errorText;
   final String? value;
+  final String? labelText;
 
   const PasswordInputField({
     super.key,
@@ -15,6 +16,7 @@ class PasswordInputField extends StatefulWidget {
     this.hintText = '',
     this.errorText,
     this.value,
+    this.labelText,
   });
 
   @override
@@ -38,7 +40,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
       });
     });
   }
-  
+
   @override
   void didUpdateWidget(covariant PasswordInputField oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -62,6 +64,18 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.labelText != null) // Thêm label nếu có
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6, left: 4),
+            child: Text(
+              widget.labelText!,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: Colors.black87,
+              ),
+            ),
+          ),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey[100],
@@ -101,12 +115,9 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
                     focusNode: _focusNode,
                     keyboardType: TextInputType.visiblePassword,
                     inputFormatters: [
-                      // Cho phép tất cả ký tự ASCII (bao gồm cả ký tự chưa được composed)
                       FilteringTextInputFormatter.allow(RegExp(r'[\x00-\x7F]')),
                     ],
-                    onChanged: (value) {
-                      widget.onChanged(value);
-                    },
+                    onChanged: widget.onChanged,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: widget.hintText,

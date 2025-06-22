@@ -7,6 +7,7 @@ class TextArea extends StatefulWidget {
   final String hintText;
   final String? errorText;
   final String? value;
+  final String? labelText;
   final int maxLines;
 
   const TextArea({
@@ -16,6 +17,7 @@ class TextArea extends StatefulWidget {
     this.hintText = '',
     this.errorText,
     this.value,
+    this.labelText,
     this.maxLines = 1,
   });
 
@@ -40,7 +42,6 @@ class _TextAreaState extends State<TextArea> {
     });
   }
   
-  
   @override
   void didUpdateWidget(covariant TextArea oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -64,6 +65,18 @@ class _TextAreaState extends State<TextArea> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        if (widget.labelText != null) // Thêm dòng này
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6, left: 4),
+            child: Text(
+              widget.labelText!,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: Colors.black87,
+              ),
+            ),
+          ),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey[100],
