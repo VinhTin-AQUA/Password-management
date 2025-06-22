@@ -75,7 +75,11 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 8),
               const SizedBox(height: 16),
-              TSearchBar(),
+              TSearchBar(
+                onChanged: (value) {
+                  homeController.onSearcChange(value);
+                },
+              ),
               const SizedBox(height: 16),
               Expanded(
                 child: Obx(() {

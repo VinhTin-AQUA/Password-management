@@ -4,6 +4,7 @@ import 'package:password_management/data/datasources/remote/supabase_manager.dar
 import 'package:password_management/data/models/account_model.dart';
 
 class HomeController extends GetxController {
+  List<AccountModel> originalAccounts = [];
   var accounts = <AccountModel>[].obs;
   final isLoading = false.obs;
 
@@ -35,11 +36,13 @@ class HomeController extends GetxController {
       // Dùng assignAll để cập nhật RxList
       (datas as List).map((json) => AccountModel.fromJson(json)).toList(),
     );
+    originalAccounts = accounts.toList();
     isLoading.value = false;
   }
 
   void addElement(AccountModel element) {
     accounts.add(element);
+    originalAccounts = accounts.toList();
     accounts.refresh();
   }
 
@@ -49,19 +52,34 @@ class HomeController extends GetxController {
     account.userName = data[AccountConstanst.userNameCol] ?? '';
     account.password = data[AccountConstanst.passwordCol] ?? '';
     account.note = data[AccountConstanst.noteCol] ?? '';
+    originalAccounts = accounts.toList();
+
     accounts.refresh();
   }
 
   Future<bool> deleteElement(String id) async {
     final check = await SupabaseManager.delete(AccountConstanst.tableName, id);
-
-    print(check);
     if (check == false) {
       return check;
     }
     final account = accounts.firstWhere((u) => u.id == id);
     accounts.remove(account);
+    originalAccounts = accounts.toList();
     accounts.refresh();
     return true;
+  }
+
+  void onSearcChange(String value) {
+    if (value == '') {
+      accounts.assignAll(originalAccounts);
+    } else {
+      accounts.assignAll(
+        originalAccounts.where(
+          (account) =>
+              account.appName.toLowerCase().contains(value.toLowerCase()),
+        ),
+      );
+    }
+    accounts.refresh();
   }
 }
