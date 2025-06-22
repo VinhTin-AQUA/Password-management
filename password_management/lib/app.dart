@@ -19,6 +19,12 @@ class MyApp extends StatelessWidget {
           selectionHandleColor: Colors.red, // Nút tròn khi kéo bôi
         ),
       ),
+      builder: (context, child) {
+        return GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child,
+        );
+      },
     );
   }
 }

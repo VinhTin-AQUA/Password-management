@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TSearchBar extends StatelessWidget {
   final ValueChanged<String> onChanged;
   const TSearchBar({super.key, required this.onChanged});
+  
 
   @override
   Widget build(BuildContext context) {
