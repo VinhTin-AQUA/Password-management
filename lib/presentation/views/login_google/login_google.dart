@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:password_management/core/init/initial_app.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/google_controller.dart';
+import 'package:password_management/presentation/widgets/loading_dialog.dart';
+import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 
 class LoginGoogle extends StatefulWidget {
   const LoginGoogle({super.key});
@@ -13,19 +14,24 @@ class LoginGoogle extends StatefulWidget {
 
 class _LoginGoogleState extends State<LoginGoogle> {
   Future<void> _handleSignIn(GoogleController builder) async {
-    final check = await builder.loginGoogle();
-
-    if (check == false) {
+    LoadingDialog.show();
+    final user = await builder.loginGoogle();
+    LoadingDialog.hide();
+    
+    if (user == null) {
+      if (mounted) {
+        showNoticeDialog(
+          context: context,
+          title: "Login failed",
+          message: "Try again",
+          status: AlertStatus.error,
+        );
+      }
       return;
     }
 
-    var isCreatePassword = await InitialApp.checkCreatePassword();
-    if (isCreatePassword == false) {
-      Get.offAllNamed(TRoutes.createPassword);
-      return;
-    }
-
-    Get.offAllNamed(TRoutes.loginApp);
+    builder.initInfo(user);
+    Get.offAllNamed(TRoutes.createPassword);
   }
 
   @override

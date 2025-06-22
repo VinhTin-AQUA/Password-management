@@ -31,4 +31,8 @@ class PasswordController extends GetxController {
     }
     return true;
   }
+
+  Future<void> logoutApp() async {
+    await SecureStorageUtil.clearValue(passwordEncryptKey);
+  }
 }

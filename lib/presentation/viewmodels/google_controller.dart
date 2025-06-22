@@ -1,5 +1,4 @@
-import 'package:password_management/core/constants/contants.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:password_management/data/models/firebase_user_info.dart';
 import 'package:password_management/data/models/google_user_info.dart';
 import 'package:password_management/data/providers/google_signin_provider.dart';
@@ -25,31 +24,19 @@ class GoogleController extends GetxController {
     if (user == null) {
       return;
     }
-    firebaseUserInfo.displayName = user.displayName ?? "Error";
-    firebaseUserInfo.email = user.email ?? "Error";
-    firebaseUserInfo.emailVerified = user.emailVerified;
-    firebaseUserInfo.isAnonymous = user.isAnonymous;
-    firebaseUserInfo.phoneNumber = user.phoneNumber ?? "Error";
-    firebaseUserInfo.photoURL = user.photoURL ?? "Error";
-    firebaseUserInfo.uid = user.uid;
-    firebaseUserInfo.refreshToken = user.refreshToken ?? "Error";
-    firebaseUserInfo.tenantId = user.tenantId ?? "Error";
 
-    final googleProvider = user.providerData[0];
-    googleUserInfo.displayName = googleProvider.displayName ?? "Error";
-    googleUserInfo.email = googleProvider.email ?? "Error";
-    googleUserInfo.phoneNumber = googleProvider.phoneNumber ?? "Error";
-    googleUserInfo.photoURL = googleProvider.photoURL ?? "Error";
-    googleUserInfo.providerId = googleProvider.providerId;
-    googleUserInfo.uid = googleProvider.uid ?? "Error";
+    initInfo(user);
   }
 
-  Future<bool> loginGoogle() async {
+  Future<User?> loginGoogle() async {
     var user = await GoogleSignInProvider.signInWithGoogle();
     if (user == null) {
-      return false;
+      return null;
     }
+    return user;
+  }
 
+  void initInfo(User user) {
     firebaseUserInfo.displayName = user.displayName ?? "Error";
     firebaseUserInfo.email = user.email ?? "Error";
     firebaseUserInfo.emailVerified = user.emailVerified;
@@ -69,9 +56,9 @@ class GoogleController extends GetxController {
     googleUserInfo.uid = googleProvider.uid ?? "Error";
 
     update();
-    if (googleProvider.uid != null) {
-      SecureStorageUtil.saveValue(googleId, googleProvider.uid);
-    }
-    return true;
+  }
+
+  Future<void> signOut() async {
+    await GoogleSignInProvider.signOut();
   }
 }

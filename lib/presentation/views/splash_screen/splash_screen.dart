@@ -1,12 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:media_store_plus/media_store_plus.dart';
+import 'package:password_management/core/config/supabase_postgre_env.dart';
+import 'package:password_management/core/constants/contants.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/core/init/initial_app.dart';
-import 'package:password_management/data/datasources/remote/supabase_manager.dart';
+import 'package:password_management/core/utils/secure_storage_util.dart';
 import 'package:password_management/data/providers/google_signin_provider.dart';
+import 'package:password_management/presentation/viewmodels/google_controller.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,17 +24,38 @@ class _SplashScreenState extends State<SplashScreen> {
     _initializeApp();
   }
 
-  Future<void> _initializeApp() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  void _initGetXControllers() {
+    Get.put(GoogleController(), permanent: true);
+  }
 
-    InitialApp.initControllers();
-    await Future.wait([InitialApp.initEnv()]);
-    await SupabaseManager.initialize();
+  Future<void> _initSupabase() async {
+    await SupabasePostgreEnv.init();
+    await Supabase.initialize(
+      url: SupabasePostgreEnv.supabaseUrl,
+      anonKey: SupabasePostgreEnv.supabaseKey,
+    );
+  }
 
+  Future<void> _initmediaStorePlus() async {
     if (Platform.isAndroid) {
       await MediaStore.ensureInitialized();
       MediaStore.appFolder = "MediaStorePlugin";
     }
+  }
+
+  Future<bool> _checkCreatePassword() async {
+    bool isCreatePassword = await SecureStorageUtil.keyHasValue(
+      passwordEncryptKey,
+    );
+    return isCreatePassword;
+  }
+
+  Future<void> _initializeApp() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    _initGetXControllers();
+
+    await Future.wait([_initSupabase(), _initmediaStorePlus()]);
 
     var isLoginGoole = GoogleSignInProvider.signedIn();
     if (isLoginGoole == false) {
@@ -40,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    var isCreatePassword = await InitialApp.checkCreatePassword();
+    var isCreatePassword = await _checkCreatePassword();
     if (isCreatePassword == false) {
       Get.offAllNamed(TRoutes.createPassword);
       return;

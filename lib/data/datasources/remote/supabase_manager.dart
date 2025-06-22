@@ -1,17 +1,10 @@
-import 'package:password_management/core/config/supabase_postgre_env.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseManager {
   static final SupabaseManager _instance = SupabaseManager._internal();
   factory SupabaseManager() => _instance;
   SupabaseManager._internal();
-
-  static Future<void> initialize() async {
-    await Supabase.initialize(
-      url: SupabasePostgreEnv.supabaseUrl,
-      anonKey: SupabasePostgreEnv.supabaseKey,
-    );
-  }
 
   static final SupabaseClient _client = Supabase.instance.client;
 

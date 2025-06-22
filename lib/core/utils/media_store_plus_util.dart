@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/services.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 
 class MediaStorePlusUtil {
