@@ -213,7 +213,7 @@ class _EditAccountState extends State<EditAccount> {
                           onPressed: () {
                             _updateAccount();
                           },
-                          text: "+",
+                          text: "✏️",
                         ),
                       ],
                     );

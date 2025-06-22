@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:password_management/presentation/widgets/delete_account_modal.dart';
 
 class AccountItem extends StatelessWidget {
   final String label;
   final VoidCallback? onTap;
+  final Future<void> Function()? onDelete;
 
-  const AccountItem({super.key, required this.label, this.onTap});
+  const AccountItem({
+    super.key,
+    required this.label,
+    this.onTap,
+    this.onDelete,
+  });
+
+  void onSelected(String value) {
+    switch (value) {
+      case 'delete':
+        showDeleteConfirmationDialog(
+          onConfirm: () async {
+            if (onDelete != null) {
+              await onDelete!();
+            }
+          },
+        );
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +54,7 @@ class AccountItem extends StatelessWidget {
           ),
           trailing: PopupMenuButton<String>(
             onSelected: (String item) {
-              print('Selected: $item');
+              onSelected(item);
             },
             icon: Icon(Icons.more_vert, color: Colors.grey[600], size: 22),
             color: Colors.white,
@@ -43,16 +64,16 @@ class AccountItem extends StatelessWidget {
             elevation: 8,
             itemBuilder:
                 (BuildContext context) => [
-                  PopupMenuItem<String>(
-                    value: 'edit',
-                    child: Row(
-                      children: [
-                        Icon(Icons.edit, color: Colors.black54, size: 20),
-                        SizedBox(width: 10),
-                        Text('Edit'),
-                      ],
-                    ),
-                  ),
+                  // PopupMenuItem<String>(
+                  //   value: 'edit',
+                  //   child: Row(
+                  //     children: [
+                  //       Icon(Icons.edit, color: Colors.black54, size: 20),
+                  //       SizedBox(width: 10),
+                  //       Text('Edit'),
+                  //     ],
+                  //   ),
+                  // ),
                   PopupMenuItem<String>(
                     value: 'delete',
                     child: Row(

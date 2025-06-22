@@ -35,7 +35,10 @@ class SupabaseManager {
   //   final user = client.auth.currentUser;
   // }
 
-  static Future<Map<String, dynamic>?> insert(String tableName, dynamic data) async {
+  static Future<Map<String, dynamic>?> insert(
+    String tableName,
+    dynamic data,
+  ) async {
     try {
       final r = await _client.from(tableName).insert(data).select();
       return r[0];
@@ -73,9 +76,13 @@ class SupabaseManager {
     }
   }
 
-  static Future<void> delete(Object id) async {
-    // Xoá dữ liệu
-    await _client.from('todos').delete().eq('id', 1);
+  static Future<bool> delete(String tableName, Object id) async {
+    try {
+      await _client.from(tableName).delete().eq('id', id);
+      return true;
+    } catch (ex) {
+      return false;
+    }
   }
 
   //Lắng nghe thay đổi realtime

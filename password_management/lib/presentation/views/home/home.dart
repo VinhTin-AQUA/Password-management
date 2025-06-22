@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/google_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
-import 'package:password_management/presentation/views/home/widgets/item_account.dart';
+import 'package:password_management/presentation/views/home/widgets/account_item.dart';
 import 'package:password_management/presentation/views/home/widgets/menu_bottom_bar.dart';
 import 'package:password_management/presentation/views/home/widgets/t_search_bar.dart';
 import 'package:password_management/presentation/views/home/widgets/user_info.dart';
@@ -30,6 +30,10 @@ class _HomeState extends State<Home> {
   void dispose() {
     Get.delete<HomeController>();
     super.dispose();
+  }
+
+  Future<void> onDeleteAccount(String id) async {
+    final r = await homeController.deleteElement(id);
   }
 
   @override
@@ -59,6 +63,9 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, index) {
                       return AccountItem(
                         label: homeController.accounts[index].appName,
+                        onDelete: () async {
+                          await onDeleteAccount(homeController.accounts[index].id);
+                        },
                         onTap: () {
                           Get.toNamed(
                             TRoutes.editAccount,

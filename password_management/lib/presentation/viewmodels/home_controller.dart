@@ -51,4 +51,17 @@ class HomeController extends GetxController {
     account.note = data[AccountConstanst.noteCol] ?? '';
     accounts.refresh();
   }
+
+  Future<bool> deleteElement(String id) async {
+    final check = await SupabaseManager.delete(AccountConstanst.tableName, id);
+
+    print(check);
+    if (check == false) {
+      return check;
+    }
+    final account = accounts.firstWhere((u) => u.id == id);
+    accounts.remove(account);
+    accounts.refresh();
+    return true;
+  }
 }
