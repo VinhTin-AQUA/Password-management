@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:media_store_plus/media_store_plus.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/core/init/initial_app.dart';
 import 'package:password_management/data/datasources/remote/supabase_manager.dart';
@@ -21,10 +24,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
-    
+
     InitialApp.initControllers();
     await Future.wait([InitialApp.initEnv()]);
     await SupabaseManager.initialize();
+
+    if (Platform.isAndroid) {
+      await MediaStore.ensureInitialized();
+      MediaStore.appFolder = "MediaStorePlugin";
+    }
 
     var isLoginGoole = GoogleSignInProvider.signedIn();
     if (isLoginGoole == false) {

@@ -87,3 +87,12 @@ void showNoticeDialog({
     },
   );
 }
+
+// if (mounted) {
+//   showNoticeDialog(
+//     context: context,
+//     title: "Success",
+//     message: "Add account successfully",
+//     status: AlertStatus.success,
+//   );
+// }

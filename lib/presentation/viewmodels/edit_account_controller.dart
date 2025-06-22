@@ -178,7 +178,6 @@ class EditAccountController extends GetxController {
       AccountConstanst.userId: myKey,
     };
 
-    print(encryptData);
     final check = await SupabaseManager.updateForUser(
       AccountConstanst.tableName,
       editAccountModel.value.id,

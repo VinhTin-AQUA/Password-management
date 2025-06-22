@@ -2,14 +2,12 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:password_management/data/models/account_model.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:path_provider/path_provider.dart';
 
 class ExcelUtil {
   ExcelUtil._();
 
-  static Future<void> exportAccountsToExcel(
+  static Future<File?> exportAccountsToExcel(
     List<AccountModel> accounts,
-    String outputFile,
   ) async {
     final excel = Excel.createExcel();
     final Sheet sheet = excel['Accounts'];
@@ -33,16 +31,17 @@ class ExcelUtil {
         TextCellValue(account.userId),
       ]);
     }
+    // Lấy dữ liệu nhị phân từ excel
+    final List<int>? bytes = excel.encode();
 
-    final dir = await getApplicationDocumentsDirectory();
-    final filePath = '${dir.path}/accounts.xlsx';
-     File(filePath)
-          ..createSync(recursive: true)
-          ..writeAsBytesSync(excel.encode()!);
+    if (bytes == null) {
+      return null;
+    }
 
-    // final file =
-    //     File(filePath)
-    //       ..createSync(recursive: true)
-    //       ..writeAsBytesSync(excel.encode()!);
+    // Lưu tạm file vào bộ nhớ trong (temporary directory)
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File('${tempDir.path}/accounts.xlsx');
+    await tempFile.writeAsBytes(bytes, flush: true);
+    return tempFile;
   }
 }

@@ -35,7 +35,6 @@ class HomeController extends GetxController {
     final datas = await SupabaseManager.getAllForUser(
       AccountConstanst.tableName,
       myKey,
-      [AccountConstanst.appNameCol, AccountConstanst.idCol],
     );
 
     accounts.assignAll(
@@ -47,6 +46,19 @@ class HomeController extends GetxController {
             myKey,
           ),
           AccountConstanst.idCol: json[AccountConstanst.idCol],
+          AccountConstanst.userNameCol: AesUtil.decryptData(
+            json[AccountConstanst.userNameCol],
+            myKey,
+          ),
+          AccountConstanst.userId: json[AccountConstanst.userId],
+          AccountConstanst.passwordCol: AesUtil.decryptData(
+            json[AccountConstanst.passwordCol],
+            myKey,
+          ),
+          AccountConstanst.noteCol: AesUtil.decryptData(
+            json[AccountConstanst.noteCol],
+            myKey,
+          ),
         };
 
         return AccountModel.fromJson(encryptData);

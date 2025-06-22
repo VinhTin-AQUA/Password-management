@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:password_management/presentation/viewmodels/excel_controller.dart';
+import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/button_with_icon.dart';
 import 'package:password_management/presentation/widgets/header.dart';
+import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -10,6 +14,52 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  late final ExcelController excelController;
+  late final HomeController homeController;
+
+  @override
+  void initState() {
+    super.initState();
+    excelController = Get.put(ExcelController());
+    homeController = Get.put(HomeController());
+  }
+
+  @override
+  void dispose() {
+    Get.delete<ExcelController>();
+    super.dispose();
+  }
+
+  Future<void> exportExcel() async {
+    var check = await excelController.exportExcel(
+      homeController.originalAccounts,
+    );
+
+    if (check == false) {
+      if (mounted) {
+        showNoticeDialog(
+          context: context,
+          title: "Faild",
+          message: "Something error",
+          status: AlertStatus.error,
+        );
+      }
+    } else {
+      if (mounted) {
+        showNoticeDialog(
+          context: context,
+          title: "Success",
+          message: "Saved in Download",
+          status: AlertStatus.success,
+        );
+      }
+    }
+  }
+
+  Future<void> importExcel() async {}
+
+  Future<void> logout() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,16 +74,16 @@ class _SettingsState extends State<Settings> {
                 ButtonWithIcon(
                   icon: Icons.file_download,
                   text: 'Export excel',
-                  onPressed: () {
-                    // Handle export excel
+                  onPressed: () async {
+                    await exportExcel();
                   },
                 ),
                 const SizedBox(height: 16),
                 ButtonWithIcon(
                   icon: Icons.file_upload,
                   text: 'Import excel',
-                  onPressed: () {
-                    // Handle import excel
+                  onPressed: () async {
+                    await importExcel();
                   },
                 ),
                 const SizedBox(height: 16),
@@ -41,8 +91,8 @@ class _SettingsState extends State<Settings> {
                 ButtonWithIcon(
                   icon: Icons.logout,
                   text: 'Logout',
-                  onPressed: () {
-                    // Handle logout
+                  onPressed: () async {
+                    await logout();
                   },
                 ),
               ],
