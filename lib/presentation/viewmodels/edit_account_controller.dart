@@ -1,10 +1,6 @@
 import 'package:get/get.dart';
-import 'package:password_management/core/constants/account_constanst.dart';
-import 'package:password_management/core/utils/aes_util.dart';
-import 'package:password_management/data/common/error_model.dart';
-import 'package:password_management/data/datasources/remote/supabase_manager.dart';
+import 'package:password_management/core/common/error_model.dart';
 import 'package:password_management/data/models/account_model.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class EditAccountController extends GetxController {
   var editAccountModel = Rx<EditAccountModel>(
@@ -35,24 +31,24 @@ class EditAccountController extends GetxController {
   // }
 
   Future<void> getData(String id) async {
-    final googleControler = Get.find<GoogleController>();
-    String myKey = googleControler.googleUserInfo.uid;
-    final data = await SupabaseManager.findOneForUserById(
-      AccountConstanst.tableName,
-      id,
-      myKey,
-    );
+    // final googleControler = Get.find<GoogleController>();
+    // String myKey = googleControler.googleUserInfo.uid;
+    // final data = await SupabaseManager.findOneForUserById(
+    //   AccountConstanst.tableName,
+    //   id,
+    //   myKey,
+    // );
 
-    editAccountModel.update((val) {
-      final r = EditAccountModel.fromJson(data);
-      val?.appName = AesUtil.decryptData(r.appName, myKey);
-      val?.userName = AesUtil.decryptData(r.userName, myKey);
-      val?.password = AesUtil.decryptData(r.password, myKey);
-      val?.confirmPassword = AesUtil.decryptData(r.password, myKey);
-      val?.note = AesUtil.decryptData(r.note, myKey);
-      val?.id = r.id;
-      val?.userId = r.userId;
-    });
+    // editAccountModel.update((val) {
+    //   final r = EditAccountModel.fromJson(data);
+    //   val?.appName = AesUtil.decryptData(r.appName, myKey);
+    //   val?.userName = AesUtil.decryptData(r.userName, myKey);
+    //   val?.password = AesUtil.decryptData(r.password, myKey);
+    //   val?.confirmPassword = AesUtil.decryptData(r.password, myKey);
+    //   val?.note = AesUtil.decryptData(r.note, myKey);
+    //   val?.id = r.id;
+    //   val?.userId = r.userId;
+    // });
   }
 
   void updateAppName(String appName) {
@@ -157,33 +153,35 @@ class EditAccountController extends GetxController {
   }
 
   Future<bool> updateAccountModel() async {
-    String myKey = Get.find<GoogleController>().googleUserInfo.uid;
-    final encryptData = {
-      AccountConstanst.appNameCol: AesUtil.encryptData(
-        editAccountModel.value.appName,
-        myKey,
-      ),
-      AccountConstanst.userNameCol: AesUtil.encryptData(
-        editAccountModel.value.userName,
-        myKey,
-      ),
-      AccountConstanst.passwordCol: AesUtil.encryptData(
-        editAccountModel.value.password,
-        myKey,
-      ),
-      AccountConstanst.noteCol: AesUtil.encryptData(
-        editAccountModel.value.note,
-        myKey,
-      ),
-      AccountConstanst.userId: myKey,
-    };
+    // String myKey = Get.find<GoogleController>().googleUserInfo.uid;
+    // final encryptData = {
+    //   AccountConstanst.appNameCol: AesUtil.encryptData(
+    //     editAccountModel.value.appName,
+    //     myKey,
+    //   ),
+    //   AccountConstanst.userNameCol: AesUtil.encryptData(
+    //     editAccountModel.value.userName,
+    //     myKey,
+    //   ),
+    //   AccountConstanst.passwordCol: AesUtil.encryptData(
+    //     editAccountModel.value.password,
+    //     myKey,
+    //   ),
+    //   AccountConstanst.noteCol: AesUtil.encryptData(
+    //     editAccountModel.value.note,
+    //     myKey,
+    //   ),
+    //   AccountConstanst.userId: myKey,
+    // };
 
-    final check = await SupabaseManager.updateForUser(
-      AccountConstanst.tableName,
-      editAccountModel.value.id,
-      myKey,
-      encryptData,
-    );
-    return check;
+    // final check = await SupabaseManager.updateForUser(
+    //   AccountConstanst.tableName,
+    //   editAccountModel.value.id,
+    //   myKey,
+    //   encryptData,
+    // );
+    // return check;
+
+    return true;
   }
 }

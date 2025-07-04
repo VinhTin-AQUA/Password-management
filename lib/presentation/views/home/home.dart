@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/views/home/widgets/account_item.dart';
 import 'package:password_management/presentation/views/home/widgets/menu_bottom_bar.dart';
@@ -19,13 +18,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late final HomeController homeController;
-  late final GoogleController googleController;
 
   @override
   void initState() {
     super.initState();
     homeController = Get.put(HomeController());
-    googleController = Get.find<GoogleController>();
   }
 
   @override
@@ -70,8 +67,10 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               UserInfo(
-                name: googleController.googleUserInfo.displayName,
-                photoUrl: googleController.googleUserInfo.photoURL,
+                // name: googleController.googleUserInfo.displayName,
+                // photoUrl: googleController.googleUserInfo.photoURL,
+                name: "AA",
+                photoUrl: "AA",
               ),
               const SizedBox(height: 8),
               const SizedBox(height: 16),

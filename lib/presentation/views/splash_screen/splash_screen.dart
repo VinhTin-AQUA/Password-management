@@ -6,8 +6,7 @@ import 'package:password_management/core/config/supabase_postgre_env.dart';
 import 'package:password_management/core/constants/contants.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/core/utils/secure_storage_util.dart';
-import 'package:password_management/data/providers/google_signin_provider.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
+import 'package:password_management/data/supabase/authentication_repo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,14 +24,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _initGetXControllers() {
-    Get.put(GoogleController(), permanent: true);
+    
   }
 
   Future<void> _initSupabase() async {
     await SupabasePostgreEnv.init();
+
     await Supabase.initialize(
       url: SupabasePostgreEnv.supabaseUrl,
       anonKey: SupabasePostgreEnv.supabaseKey,
+      authOptions: const FlutterAuthClientOptions(
+        authFlowType: AuthFlowType.pkce,
+      ),
     );
   }
 
@@ -43,13 +46,6 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<bool> _checkCreatePassword() async {
-    bool isCreatePassword = await SecureStorageUtil.keyHasValue(
-      passwordEncryptKey,
-    );
-    return isCreatePassword;
-  }
-
   Future<void> _initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -57,15 +53,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Future.wait([_initSupabase(), _initmediaStorePlus()]);
 
-    var isLoginGoole = GoogleSignInProvider.signedIn();
-    if (isLoginGoole == false) {
-      Get.offAllNamed(TRoutes.loginGoole);
-      return;
-    }
+    // var isLoginGoole = GoogleSignInProvider.signedIn();
+    // if (isLoginGoole == false) {
+    //   Get.offAllNamed(TRoutes.loginGoole);
+    //   return;
+    // }
 
-    var isCreatePassword = await _checkCreatePassword();
-    if (isCreatePassword == false) {
-      Get.offAllNamed(TRoutes.createPassword);
+    var isCreatePassword = AuthenticationRepo.logedIn();
+    if (isCreatePassword == null) {
+      Get.offAllNamed(TRoutes.signup);
       return;
     }
 

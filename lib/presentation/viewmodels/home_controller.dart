@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/constants/account_constanst.dart';
-import 'package:password_management/core/utils/aes_util.dart';
-import 'package:password_management/data/datasources/remote/supabase_manager.dart';
 import 'package:password_management/data/models/account_model.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class HomeController extends GetxController {
   List<AccountModel> originalAccounts = [];
@@ -29,43 +26,43 @@ class HomeController extends GetxController {
   // }
 
   Future<void> loadData() async {
-    isLoading.value = true;
-    final googleControler = Get.find<GoogleController>();
-    String myKey = googleControler.googleUserInfo.uid;
-    final datas = await SupabaseManager.getAllForUser(
-      AccountConstanst.tableName,
-      myKey,
-    );
+    // isLoading.value = true;
+    // final googleControler = Get.find<GoogleController>();
+    // String myKey = googleControler.googleUserInfo.uid;
+    // final datas = await SupabaseManager.getAllForUser(
+    //   AccountConstanst.tableName,
+    //   myKey,
+    // );
 
-    accounts.assignAll(
-      // Dùng assignAll để cập nhật RxList
-      (datas as List).map((json) {
-        final encryptData = {
-          AccountConstanst.appNameCol: AesUtil.decryptData(
-            json[AccountConstanst.appNameCol],
-            myKey,
-          ),
-          AccountConstanst.idCol: json[AccountConstanst.idCol],
-          AccountConstanst.userNameCol: AesUtil.decryptData(
-            json[AccountConstanst.userNameCol],
-            myKey,
-          ),
-          AccountConstanst.userId: json[AccountConstanst.userId],
-          AccountConstanst.passwordCol: AesUtil.decryptData(
-            json[AccountConstanst.passwordCol],
-            myKey,
-          ),
-          AccountConstanst.noteCol: AesUtil.decryptData(
-            json[AccountConstanst.noteCol],
-            myKey,
-          ),
-        };
+    // accounts.assignAll(
+    //   // Dùng assignAll để cập nhật RxList
+    //   (datas as List).map((json) {
+    //     final encryptData = {
+    //       AccountConstanst.appNameCol: AesUtil.decryptData(
+    //         json[AccountConstanst.appNameCol],
+    //         myKey,
+    //       ),
+    //       AccountConstanst.idCol: json[AccountConstanst.idCol],
+    //       AccountConstanst.userNameCol: AesUtil.decryptData(
+    //         json[AccountConstanst.userNameCol],
+    //         myKey,
+    //       ),
+    //       AccountConstanst.userId: json[AccountConstanst.userId],
+    //       AccountConstanst.passwordCol: AesUtil.decryptData(
+    //         json[AccountConstanst.passwordCol],
+    //         myKey,
+    //       ),
+    //       AccountConstanst.noteCol: AesUtil.decryptData(
+    //         json[AccountConstanst.noteCol],
+    //         myKey,
+    //       ),
+    //     };
 
-        return AccountModel.fromJson(encryptData);
-      }).toList(),
-    );
-    originalAccounts = accounts.toList();
-    isLoading.value = false;
+    //     return AccountModel.fromJson(encryptData);
+    //   }).toList(),
+    // );
+    // originalAccounts = accounts.toList();
+    // isLoading.value = false;
   }
 
   void addElement(AccountModel element) {
@@ -86,18 +83,18 @@ class HomeController extends GetxController {
   }
 
   Future<bool> deleteElement(String id) async {
-    final check = await SupabaseManager.deleteForUser(
-      AccountConstanst.tableName,
-      id,
-      Get.find<GoogleController>().googleUserInfo.uid,
-    );
-    if (check == false) {
-      return check;
-    }
-    final account = accounts.firstWhere((u) => u.id == id);
-    accounts.remove(account);
-    originalAccounts = accounts.toList();
-    accounts.refresh();
+    // final check = await SupabaseManager.deleteForUser(
+    //   AccountConstanst.tableName,
+    //   id,
+    //   Get.find<GoogleController>().googleUserInfo.uid,
+    // );
+    // if (check == false) {
+    //   return check;
+    // }
+    // final account = accounts.firstWhere((u) => u.id == id);
+    // accounts.remove(account);
+    // originalAccounts = accounts.toList();
+    // accounts.refresh();
     return true;
   }
 

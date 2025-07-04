@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/excel_controller.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
-import 'package:password_management/presentation/viewmodels/password_controller.dart';
+import 'package:password_management/presentation/viewmodels/passcode_controller.dart';
 import 'package:password_management/presentation/widgets/button_with_icon.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
@@ -19,22 +17,20 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   late final ExcelController excelController;
   late final HomeController homeController;
-  late final PasswordController passwordController;
-  late final GoogleController googleController;
+  late final PasscodeController passwordController;
 
   @override
   void initState() {
     super.initState();
     excelController = Get.put(ExcelController());
     homeController = Get.find<HomeController>();
-    googleController = Get.put(GoogleController());
-    passwordController = Get.put(PasswordController());
+    passwordController = Get.put(PasscodeController());
   }
 
   @override
   void dispose() {
     Get.delete<ExcelController>();
-    Get.delete<PasswordController>();
+    Get.delete<PasscodeController>();
     super.dispose();
   }
 
@@ -67,9 +63,8 @@ class _SettingsState extends State<Settings> {
   Future<void> importExcel() async {}
 
   Future<void> logout() async {
-    await googleController.signOut();
+    // await googleController.signOut();
     await passwordController.logoutApp();
-    Get.toNamed(TRoutes.loginGoole);
   }
 
   @override

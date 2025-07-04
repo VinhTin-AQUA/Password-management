@@ -1,10 +1,6 @@
 import 'package:get/get.dart';
-import 'package:password_management/core/constants/account_constanst.dart';
-import 'package:password_management/core/utils/aes_util.dart';
-import 'package:password_management/data/common/error_model.dart';
-import 'package:password_management/data/datasources/remote/supabase_manager.dart';
+import 'package:password_management/core/common/error_model.dart';
 import 'package:password_management/data/models/account_model.dart';
-import 'package:password_management/presentation/viewmodels/google_controller.dart';
 
 class AddAccountController extends GetxController {
   AddAccountModel addAccountModel = AddAccountModel(
@@ -114,44 +110,7 @@ class AddAccountController extends GetxController {
   }
 
   Future<AccountModel?> saveAccountModel() async {
-    final googleControler = Get.find<GoogleController>();
-    String myKey = googleControler.googleUserInfo.uid;
-
-    final encryptData = {
-      AccountConstanst.appNameCol: AesUtil.encryptData(
-        addAccountModel.appName,
-        myKey,
-      ),
-      AccountConstanst.userNameCol: AesUtil.encryptData(
-        addAccountModel.userName,
-        myKey,
-      ),
-      AccountConstanst.passwordCol: AesUtil.encryptData(
-        addAccountModel.password,
-        myKey,
-      ),
-      AccountConstanst.noteCol: AesUtil.encryptData(
-        addAccountModel.note,
-        myKey,
-      ),
-      AccountConstanst.userId: myKey,
-    };
-
-    final r = await SupabaseManager.insert(
-      AccountConstanst.tableName,
-      encryptData,
-    );
-    if (r == null) {
-      return null;
-    }
-    return AccountModel.fromJson({
-      AccountConstanst.idCol: r[AccountConstanst.idCol],
-      AccountConstanst.appNameCol: addAccountModel.appName,
-      AccountConstanst.userNameCol: addAccountModel.userName,
-      AccountConstanst.passwordCol: addAccountModel.password,
-      AccountConstanst.noteCol: addAccountModel.note,
-      AccountConstanst.userId: myKey,
-    });
+    
   }
 }
 
