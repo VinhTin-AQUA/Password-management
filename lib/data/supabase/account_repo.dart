@@ -44,7 +44,7 @@ class AccountRepo extends BaseSupabase {
     return response;
   }
 
-  Future<bool> updateForUser(Object id, dynamic newData) async {
+  Future<bool> update(Object id, dynamic newData) async {
     try {
       await BaseSupabase.client.from(tableName).update(newData).eq(idCol, id);
       return true;

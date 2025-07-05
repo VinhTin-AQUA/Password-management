@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/common/error_model.dart';
+import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
+import 'package:password_management/data/supabase/account_repo.dart';
 
 class EditAccountController extends GetxController {
   var editAccountModel = Rx<EditAccountModel>(
@@ -19,11 +22,13 @@ class EditAccountController extends GetxController {
   var passwordError = Rx<ErrorModel>(ErrorModel());
   var confirmPasswordError = Rx<ErrorModel>(ErrorModel());
   var userNameError = Rx<ErrorModel>(ErrorModel());
+  late AccountRepo accountRepo;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    accountRepo = AccountRepo();
+  }
 
   // @override
   // void onClose() {
@@ -31,24 +36,23 @@ class EditAccountController extends GetxController {
   // }
 
   Future<void> getData(String id) async {
-    // final googleControler = Get.find<GoogleController>();
-    // String myKey = googleControler.googleUserInfo.uid;
-    // final data = await SupabaseManager.findOneForUserById(
-    //   AccountConstanst.tableName,
-    //   id,
-    //   myKey,
-    // );
+    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    if (key == null) {
+      return;
+    }
+    final data = await accountRepo.findOneById(id);
 
-    // editAccountModel.update((val) {
-    //   final r = EditAccountModel.fromJson(data);
-    //   val?.appName = AesUtil.decryptData(r.appName, myKey);
-    //   val?.userName = AesUtil.decryptData(r.userName, myKey);
-    //   val?.password = AesUtil.decryptData(r.password, myKey);
-    //   val?.confirmPassword = AesUtil.decryptData(r.password, myKey);
-    //   val?.note = AesUtil.decryptData(r.note, myKey);
-    //   val?.id = r.id;
-    //   val?.userId = r.userId;
-    // });
+    editAccountModel.update((val) {
+      final r = EditAccountModel.fromJson(data);
+      r.decrypt(key);
+      val?.appName = r.appName;
+      val?.userName = r.userName;
+      val?.password = r.password;
+      val?.confirmPassword = r.password;
+      val?.note = r.note;
+      val?.id = r.id;
+      val?.userId = r.userId;
+    });
   }
 
   void updateAppName(String appName) {
@@ -153,35 +157,16 @@ class EditAccountController extends GetxController {
   }
 
   Future<bool> updateAccountModel() async {
-    // String myKey = Get.find<GoogleController>().googleUserInfo.uid;
-    // final encryptData = {
-    //   AccountConstanst.appNameCol: AesUtil.encryptData(
-    //     editAccountModel.value.appName,
-    //     myKey,
-    //   ),
-    //   AccountConstanst.userNameCol: AesUtil.encryptData(
-    //     editAccountModel.value.userName,
-    //     myKey,
-    //   ),
-    //   AccountConstanst.passwordCol: AesUtil.encryptData(
-    //     editAccountModel.value.password,
-    //     myKey,
-    //   ),
-    //   AccountConstanst.noteCol: AesUtil.encryptData(
-    //     editAccountModel.value.note,
-    //     myKey,
-    //   ),
-    //   AccountConstanst.userId: myKey,
-    // };
-
-    // final check = await SupabaseManager.updateForUser(
-    //   AccountConstanst.tableName,
-    //   editAccountModel.value.id,
-    //   myKey,
-    //   encryptData,
-    // );
-    // return check;
-
-    return true;
+    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    if (key == null) {
+      return false;
+    }
+    editAccountModel.value.encrypt(key);
+    final check = await accountRepo.update(
+      editAccountModel.value.id,
+      editAccountModel.toJson(),
+    );
+    editAccountModel.value.decrypt(key);
+    return check;
   }
 }

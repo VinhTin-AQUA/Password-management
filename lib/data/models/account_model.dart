@@ -130,4 +130,24 @@ class EditAccountModel {
       AccountHelper.userId: userId,
     };
   }
+
+  void encrypt(String key) {
+    appName = AesUtil.encryptData(appName, key);
+    userName = AesUtil.encryptData(userName, key);
+    password = AesUtil.encryptData(password, key);
+
+    if (note != "") {
+      note = AesUtil.encryptData(note, key);
+    }
+  }
+
+  void decrypt(String key) {
+    appName = AesUtil.decryptData(appName, key);
+    userName = AesUtil.decryptData(userName, key);
+    password = AesUtil.decryptData(password, key);
+
+    if (note != "") {
+      note = AesUtil.decryptData(note, key);
+    }
+  }
 }
