@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/common/error_model.dart';
 import 'package:password_management/data/models/account_model.dart';
+import 'package:password_management/data/supabase/account_repo.dart';
 
 class AddAccountController extends GetxController {
   AddAccountModel addAccountModel = AddAccountModel(
@@ -110,7 +111,13 @@ class AddAccountController extends GetxController {
   }
 
   Future<AccountModel?> saveAccountModel() async {
-    
+    AccountRepo accountRepo = AccountRepo();
+    await addAccountModel.encryprt();
+    var json = await accountRepo.insert(addAccountModel.toJson());
+    if (json == null) {
+      return null;
+    }
+    return AccountModel.fromJson(json);
   }
 }
 

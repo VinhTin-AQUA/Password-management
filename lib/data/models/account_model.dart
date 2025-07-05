@@ -1,5 +1,7 @@
-
+import 'package:password_management/core/utils/aes_util.dart';
+import 'package:password_management/core/utils/secure_storage_util.dart';
 import 'package:password_management/data/helpers/account_helper.dart';
+import 'package:password_management/data/helpers/passcode_helper.dart';
 
 class AccountModel {
   String id = '';
@@ -55,6 +57,20 @@ class AddAccountModel {
       AccountHelper.noteCol: note,
       AccountHelper.userId: userId,
     };
+  }
+
+  Future<void> encryprt() async {
+    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    if (key == null) {
+      return;
+    }
+    appName = AesUtil.encryptData(appName, key);
+    userName = AesUtil.encryptData(userName, key);
+    password = AesUtil.encryptData(password, key);
+
+    if (note != "") {
+      note = AesUtil.encryptData(note, key);
+    }
   }
 }
 

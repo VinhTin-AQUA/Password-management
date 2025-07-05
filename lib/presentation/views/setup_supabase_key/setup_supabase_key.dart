@@ -7,6 +7,7 @@ import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/helpers/supabase_helper.dart';
 import 'package:password_management/presentation/viewmodels/setup_key_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
+import 'package:password_management/presentation/widgets/loading_dialog.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
@@ -95,7 +96,9 @@ class SsetupSupabaseKeyState extends State<SetupSupabaseKey> {
       return;
     }
 
+    LoadingDialog.show();
     String? message = await setupKeyController.initSupabase();
+    LoadingDialog.hide();
     if (message == null) {
       await SecureStorageUtil.saveValue(
         SupabaseHelper.supabaseKey,

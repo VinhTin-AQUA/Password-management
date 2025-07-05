@@ -32,11 +32,10 @@ class SupabaseManager {
         ),
       );
 
-      var r =
-          await Supabase.instance.client
-              .from(AccountHelper.tableName)
-              .select()
-              .maybeSingle();
+      await Supabase.instance.client
+          .from(AccountHelper.tableName)
+          .select()
+          .maybeSingle();
 
       return null;
     } catch (e) {

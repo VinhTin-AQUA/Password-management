@@ -28,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
+    await SplashController.initSupabase();
+
     WidgetsBinding.instance.performReassemble();
     Get.offAllNamed(TRoutes.loginApp);
   }
