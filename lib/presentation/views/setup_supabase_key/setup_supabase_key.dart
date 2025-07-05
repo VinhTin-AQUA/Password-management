@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/helpers/supabase_helper.dart';
 import 'package:password_management/presentation/viewmodels/setup_key_controller.dart';
@@ -100,17 +100,17 @@ class SsetupSupabaseKeyState extends State<SetupSupabaseKey> {
     String? message = await setupKeyController.initSupabase();
     LoadingDialog.hide();
     if (message == null) {
-      await SecureStorageUtil.saveValue(
+      await SecureStorageHelper.saveValue(
         SupabaseHelper.supabaseKey,
         setupKeyController.supabaseKey,
       );
 
-      await SecureStorageUtil.saveValue(
+      await SecureStorageHelper.saveValue(
         SupabaseHelper.supabaseUrl,
         setupKeyController.supabaseUrl,
       );
 
-      await SecureStorageUtil.saveValue(
+      await SecureStorageHelper.saveValue(
         PasscodeHelper.passCodeKey,
         setupKeyController.passcode,
       );

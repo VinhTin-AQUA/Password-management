@@ -1,7 +1,7 @@
 import 'package:path_provider/path_provider.dart';
 
-class PathProviderUtil {
-  PathProviderUtil._();
+class PathProviderHelper {
+  PathProviderHelper._();
 
   static Future<String?> getDownloadDirectoryPath() async {
     try {

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/account_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
@@ -31,7 +31,7 @@ class HomeController extends GetxController {
   // }
 
   Future<void> loadData() async {
-    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
     if (key == null) {
       return;
     }

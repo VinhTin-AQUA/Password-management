@@ -1,7 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class SecureStorageUtil {
-  SecureStorageUtil._();
+class SecureStorageHelper {
+  SecureStorageHelper._();
 
   // final LocalAuthentication _localAuth = LocalAuthentication();
   static final FlutterSecureStorage _secureStorage = FlutterSecureStorage();

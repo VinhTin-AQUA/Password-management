@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:excel/excel.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/helpers/supabase_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
 import 'package:path_provider/path_provider.dart';
 
-class ExcelUtil {
-  ExcelUtil._();
+class ExcelHelper {
+  ExcelHelper._();
 
   static Future<File?> exportAccountsToExcel(
     List<AccountModel> accounts,
@@ -56,11 +56,11 @@ class ExcelUtil {
   }
 
   static Future<void> passcodeSheet(Sheet passcodeSheet) async {
-    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
-    var supabaseKey = await SecureStorageUtil.getValue(
+    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
+    var supabaseKey = await SecureStorageHelper.getValue(
       SupabaseHelper.supabaseKey,
     );
-    var supabaseUrl = await SecureStorageUtil.getValue(
+    var supabaseUrl = await SecureStorageHelper.getValue(
       SupabaseHelper.supabaseUrl,
     );
     passcodeSheet.appendRow([

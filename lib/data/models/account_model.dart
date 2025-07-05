@@ -1,4 +1,4 @@
-import 'package:password_management/core/utils/aes_util.dart';
+import 'package:password_management/data/helpers/aes_helper.dart';
 import 'package:password_management/data/helpers/account_helper.dart';
 
 class AccountModel {
@@ -30,12 +30,12 @@ class AccountModel {
   }
 
   void decrypt(String key) {
-    appName = AesUtil.decryptData(appName, key);
-    userName = AesUtil.decryptData(userName, key);
-    password = AesUtil.decryptData(password, key);
+    appName = AesHelper.decryptData(appName, key);
+    userName = AesHelper.decryptData(userName, key);
+    password = AesHelper.decryptData(password, key);
 
     if (note != "") {
-      note = AesUtil.decryptData(note, key);
+      note = AesHelper.decryptData(note, key);
     }
   }
 }
@@ -68,22 +68,22 @@ class AddAccountModel {
   }
 
   void encrypt(String key) {
-    appName = AesUtil.encryptData(appName, key);
-    userName = AesUtil.encryptData(userName, key);
-    password = AesUtil.encryptData(password, key);
+    appName = AesHelper.encryptData(appName, key);
+    userName = AesHelper.encryptData(userName, key);
+    password = AesHelper.encryptData(password, key);
 
     if (note != "") {
-      note = AesUtil.encryptData(note, key);
+      note = AesHelper.encryptData(note, key);
     }
   }
 
   void decrypt(String key) {
-    appName = AesUtil.decryptData(appName, key);
-    userName = AesUtil.decryptData(userName, key);
-    password = AesUtil.decryptData(password, key);
+    appName = AesHelper.decryptData(appName, key);
+    userName = AesHelper.decryptData(userName, key);
+    password = AesHelper.decryptData(password, key);
 
     if (note != "") {
-      note = AesUtil.decryptData(note, key);
+      note = AesHelper.decryptData(note, key);
     }
   }
 }
@@ -132,22 +132,22 @@ class EditAccountModel {
   }
 
   void encrypt(String key) {
-    appName = AesUtil.encryptData(appName, key);
-    userName = AesUtil.encryptData(userName, key);
-    password = AesUtil.encryptData(password, key);
+    appName = AesHelper.encryptData(appName, key);
+    userName = AesHelper.encryptData(userName, key);
+    password = AesHelper.encryptData(password, key);
 
     if (note != "") {
-      note = AesUtil.encryptData(note, key);
+      note = AesHelper.encryptData(note, key);
     }
   }
 
   void decrypt(String key) {
-    appName = AesUtil.decryptData(appName, key);
-    userName = AesUtil.decryptData(userName, key);
-    password = AesUtil.decryptData(password, key);
+    appName = AesHelper.decryptData(appName, key);
+    userName = AesHelper.decryptData(userName, key);
+    password = AesHelper.decryptData(password, key);
 
     if (note != "") {
-      note = AesUtil.decryptData(note, key);
+      note = AesHelper.decryptData(note, key);
     }
   }
 }

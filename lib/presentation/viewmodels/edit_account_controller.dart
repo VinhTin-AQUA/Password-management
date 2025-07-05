@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/common/error_model.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
 import 'package:password_management/data/supabase/account_repo.dart';
@@ -36,7 +36,7 @@ class EditAccountController extends GetxController {
   // }
 
   Future<void> getData(String id) async {
-    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
     if (key == null) {
       return;
     }
@@ -157,7 +157,7 @@ class EditAccountController extends GetxController {
   }
 
   Future<bool> updateAccountModel() async {
-    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
     if (key == null) {
       return false;
     }

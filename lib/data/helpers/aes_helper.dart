@@ -3,8 +3,8 @@ import 'package:encrypt/encrypt.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart'; // for sha256
 
-class AesUtil {
-  AesUtil._();
+class AesHelper {
+  AesHelper._();
 
   static String _genKey(String raw) {
     final base64Key = base64.encode(utf8.encode(raw));

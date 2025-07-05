@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/presentation/viewmodels/login_controller.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
@@ -35,7 +35,7 @@ class _LoginAppState extends State<LoginApp> {
   }
 
   Future<void> _init() async {
-    passCode = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    passCode = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
   }
 
   Future<void> _login() async {

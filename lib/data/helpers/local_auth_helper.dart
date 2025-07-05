@@ -1,7 +1,7 @@
 import 'package:local_auth/local_auth.dart';
 
-class LocalAuthUtil {
-  LocalAuthUtil._();
+class LocalAuthHelper {
+  LocalAuthHelper._();
 
   static final LocalAuthentication _localAuth = LocalAuthentication();
 

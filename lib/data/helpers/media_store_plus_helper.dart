@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:media_store_plus/media_store_plus.dart';
 
-class MediaStorePlusUtil {
-  MediaStorePlusUtil._();
+class MediaStorePlusHelper {
+  MediaStorePlusHelper._();
 
   static Future<bool> saveFileToDownloads(File file) async {
     try {

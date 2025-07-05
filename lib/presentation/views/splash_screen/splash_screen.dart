@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/splash_controller.dart';
+import 'package:password_management/presentation/widgets/logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -42,11 +43,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const FlutterLogo(size: 100),
             const SizedBox(height: 20),
-            CircularProgressIndicator(),
+            // CircularProgressIndicator(),
+            Logo(size: 100),
             const SizedBox(height: 20),
-            Text('initializing'.tr), // Sử dụng localization
           ],
         ),
       ),
