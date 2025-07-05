@@ -17,7 +17,8 @@ class Logger {
               '**Error**\n'
               '```$errorMessage```\n' 
               '**Stacktrace:**\n'
-              '```$stack```',
+              '```$stack```'
+              '-------------',
         };
         await http.post(
           Uri.parse(discordWebhookUrl!),

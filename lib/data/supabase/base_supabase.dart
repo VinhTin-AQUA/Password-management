@@ -10,8 +10,12 @@ class SupabaseManager {
   static SupabaseClient get client => _client;
 
   static bool isSupabaseInitialized() {
-    Supabase.instance.client;
-    return true;
+    try {
+      Supabase.instance.client;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   static Future<String?> initSupabase(
@@ -30,7 +34,6 @@ class SupabaseManager {
           authFlowType: AuthFlowType.pkce,
         ),
       );
-
       await Supabase.instance.client.from(AccountHelper.tableName).select();
 
       return null;

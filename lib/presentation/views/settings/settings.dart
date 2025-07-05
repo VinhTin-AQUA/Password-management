@@ -52,7 +52,7 @@ class _SettingsState extends State<Settings> {
         showNoticeDialog(
           context: context,
           title: "Success",
-          message: "Saved in Download",
+          message: "Saved in Downloads",
           status: AlertStatus.success,
         );
       }

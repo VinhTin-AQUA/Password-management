@@ -1,77 +1,45 @@
 <div align="center" id="readme-top">
-  <a align="center" href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://cdn-icons-png.flaticon.com/512/4429/4429903.png" alt="Logo" width="80" height="80">
-  </a>
 
-  <h3 align="center" style="color: red;">Password Management</h3>
+<img src="./demos/security.png" alt="Logo" width="80" height="80">
+
+  <h3 align="center" style="color: red;">Password Manager</h3>
 
   <p align="center">
-    🖼️A great tool for password🖼️
+    🔒A great tool for password🔒
     <br />
-    <a href="./password_management/">Source code</a>
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-        <li><a href="#demo">Demo</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started-with-source-code">Getting Started With Source Code</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#usage">Usage</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## 🔐About The Project
 
-<p align="center"><img src="./images/2.jpg"  width="200" /></P>
+<p align="center"><img src="./demos/1.jpg"  width="200" /></P>
 
 <p>
-Password Manager is a security solution that helps users store and manage login information safely and conveniently. Data is stored on Firestore using the user's personal Google account, ensuring that only the user has access, and the developer cannot view or control this data.</p>
+Password Manager is a decentralized password management application built with Flutter and Supabase, designed to give users full control over their own data. Unlike traditional password managers that store data on centralized servers owned by developers, this app follows a user-owned, privacy-first architecture:</p>
 
-<p><b>🔒 Maximum security</b></p>
+-   ✅ Users create their own Supabase project and manually input their project's API URL and Key into the app.
 
--   <b>AES Encryption</b>: Logins and passwords are encrypted using the AES algorithm before being stored in Firestore, protecting data from unauthorized access.
+-   ✅ These credentials are stored locally on the user’s device and are never uploaded or saved to any external server.
 
--   <b>Secure authentication</b>: The app supports login passwords or biometrics (fingerprint/face) to protect access.
+-   ✅ The app requires users to set up a personal passcode, which is securely stored on the device using flutter_secure_storage. This passcode is also never stored in Supabase.
 
-<p><b>⚡ Main function</b></p>
+-   ✅ All data stored in Supabase is AES-encrypted using the user’s passcode as the encryption key, ensuring that only the user can decrypt and access their information.
 
--   ✅ Add Account: Store login information securely.
-
--   ✅ View Account: Easily access a list of saved accounts.
-
--   ✅ Edit/Delete Account: Update or delete information as needed.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p>This approach guarantees maximum privacy, strong security, and full ownership of data, making it an ideal solution for users who care deeply about their digital security and independence.</p>
 
 ### Built With
 
 -   ![flutter version](https://img.shields.io/badge/flutter-v.3.27.3-02569B?style=flat&logo=flutter&logoColor=%2302569B&logoSize=20&label=Flutter&labelColor=%23ffffff&color=%2302569B)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Demo
 
 <p>
-    <img src="./images/1.jpg" width="200" />
-    <img src="./images/2.jpg" width="200" />
-    <img src="./images/3.jpg" width="200" />
-    <img src="./images/4.jpg" width="200" />
-    <img src="./images/5.jpg" width="200" />
+    <img src="./demos/1.jpg" width="200" />
+    <img src="./demos/2.jpg" width="200" />
+    <img src="./demos/3.jpg" width="200" />
+    <img src="./demos/4.jpg" width="200" />
 </p>
 
 ## Getting Started With Source Code
@@ -93,10 +61,9 @@ This is small basic tool. You only need
 
 ### Usage
 
--   ➡️ Step 1: Go to firebase console and create 1 project.
+-   ➡️ Step 1: Create a project on <b>Supabase</b>.
 
--   ➡️ Step 2: Add app Android and input package name <b>com.newtun.password_management</b> (importance)
+-   ➡️ Step 2: Copy <b>Supabase Url</b> and <b>Supabase Key</b> to config App 
 
--   ➡️ Step 3: download google-services.json and put it in <b>/password_management/android/app/</b>
+-   ➡️ Step 3: Enter Passcode <b>(Never forget the Passcode)</b>
 
--   ➡️ Step 4: in <b>/password_management/lib/services/crypto_service.dart</b>, you must add your new key <b>'256_bits_key'</b> and <b>'128_bits_key'</b>
