@@ -10,12 +10,8 @@ class SupabaseManager {
   static SupabaseClient get client => _client;
 
   static bool isSupabaseInitialized() {
-    try {
-      Supabase.instance.client;
-      return true;
-    } catch (e) {
-      return false;
-    }
+    Supabase.instance.client;
+    return true;
   }
 
   static Future<String?> initSupabase(

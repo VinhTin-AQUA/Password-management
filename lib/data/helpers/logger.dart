@@ -1,5 +1,4 @@
 import 'dart:isolate';
-
 import 'package:password_management/data/common/env.dart';
 import 'dart:async';
 import 'dart:convert';

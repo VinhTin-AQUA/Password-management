@@ -4,11 +4,7 @@ class PathProviderHelper {
   PathProviderHelper._();
 
   static Future<String?> getDownloadDirectoryPath() async {
-    try {
-      final directory = await getDownloadsDirectory();
-      return directory?.path;
-    } catch (e) {
-      return null;
-    }
+    final directory = await getDownloadsDirectory();
+    return directory?.path;
   }
 }

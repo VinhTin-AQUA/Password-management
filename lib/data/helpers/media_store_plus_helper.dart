@@ -5,7 +5,6 @@ class MediaStorePlusHelper {
   MediaStorePlusHelper._();
 
   static Future<bool> saveFileToDownloads(File file) async {
-    try {
       final mediaStore = MediaStore();
       final r = await mediaStore.saveFile(
         tempFilePath: file.path,
@@ -22,8 +21,5 @@ class MediaStorePlusHelper {
         await file.delete();
       }
       return r.isSuccessful;
-    } catch (ex) {
-      return false;
-    }
   }
 }

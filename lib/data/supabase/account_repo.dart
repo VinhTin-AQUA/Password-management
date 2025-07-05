@@ -45,20 +45,12 @@ class AccountRepo extends BaseSupabase {
   }
 
   Future<bool> update(Object id, dynamic newData) async {
-    try {
       await BaseSupabase.client.from(tableName).update(newData).eq(idCol, id);
       return true;
-    } catch (ex) {
-      return false;
-    }
   }
 
   Future<bool> delete(Object id) async {
-    try {
-      await BaseSupabase.client.from(tableName).delete().eq(idCol, id);
-      return true;
-    } catch (ex) {
-      return false;
-    }
+    await BaseSupabase.client.from(tableName).delete().eq(idCol, id);
+    return true;
   }
 }
