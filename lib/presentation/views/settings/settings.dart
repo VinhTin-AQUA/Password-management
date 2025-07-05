@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/excel_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
-// import 'package:password_management/presentation/viewmodels/passcode_controller.dart';
 import 'package:password_management/presentation/widgets/button_with_icon.dart';
 import 'package:password_management/presentation/widgets/header.dart';
+import 'package:password_management/presentation/widgets/loading_dialog.dart';
 import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 
 class Settings extends StatefulWidget {
@@ -17,27 +17,26 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   late final ExcelController excelController;
   late final HomeController homeController;
-  // late final PasscodeController passwordController;
 
   @override
   void initState() {
     super.initState();
     excelController = Get.put(ExcelController());
     homeController = Get.find<HomeController>();
-    // passwordController = Get.put(PasscodeController());
   }
 
   @override
   void dispose() {
     Get.delete<ExcelController>();
-    // Get.delete<PasscodeController>();
     super.dispose();
   }
 
   Future<void> exportExcel() async {
+    LoadingDialog.show();
     var check = await excelController.exportExcel(
       homeController.originalAccounts,
     );
+    LoadingDialog.hide();
 
     if (check == false) {
       if (mounted) {
@@ -62,9 +61,7 @@ class _SettingsState extends State<Settings> {
 
   Future<void> importExcel() async {}
 
-  Future<void> logout() async {
-
-  }
+  Future<void> logout() async {}
 
   @override
   Widget build(BuildContext context) {
