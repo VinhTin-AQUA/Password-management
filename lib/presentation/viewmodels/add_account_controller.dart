@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:password_management/core/common/error_model.dart';
+import 'package:password_management/core/utils/secure_storage_util.dart';
+import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
 import 'package:password_management/data/supabase/account_repo.dart';
 
@@ -111,13 +113,19 @@ class AddAccountController extends GetxController {
   }
 
   Future<AccountModel?> saveAccountModel() async {
+    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
+    if (key == null) {
+      return null;
+    }
     AccountRepo accountRepo = AccountRepo();
-    await addAccountModel.encryprt();
+    addAccountModel.encrypt(key);
     var json = await accountRepo.insert(addAccountModel.toJson());
     if (json == null) {
       return null;
     }
-    return AccountModel.fromJson(json);
+    var r = AccountModel.fromJson(json);
+    r.decrypt(key);
+    return r;
   }
 }
 

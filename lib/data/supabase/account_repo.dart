@@ -15,19 +15,32 @@ class AccountRepo extends BaseSupabase {
   }
 
   Future<Map<String, dynamic>> findOneById(Object id) async {
-    final data = await BaseSupabase.client.from(tableName).select().eq(idCol, id).single();
+    final data =
+        await BaseSupabase.client
+            .from(tableName)
+            .select()
+            .eq(idCol, id)
+            .single();
     return data;
   }
 
   Future<Map<String, dynamic>> findOneByQuery(Map<String, Object> query) async {
-    var response = await BaseSupabase.client.from(tableName).select().match(query).single();
+    var response =
+        await BaseSupabase.client
+            .from(tableName)
+            .select()
+            .match(query)
+            .single();
     return response;
   }
 
   Future<List<Map<String, dynamic>>> findManyByQuery(
     Map<String, Object> query,
   ) async {
-    var response = await BaseSupabase.client.from(tableName).select().match(query);
+    var response = await BaseSupabase.client
+        .from(tableName)
+        .select()
+        .match(query);
     return response;
   }
 
@@ -40,7 +53,7 @@ class AccountRepo extends BaseSupabase {
     }
   }
 
-  Future<bool> deleteForUser(Object id) async {
+  Future<bool> delete(Object id) async {
     try {
       await BaseSupabase.client.from(tableName).delete().eq(idCol, id);
       return true;

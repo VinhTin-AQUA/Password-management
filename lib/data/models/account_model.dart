@@ -1,7 +1,5 @@
 import 'package:password_management/core/utils/aes_util.dart';
-import 'package:password_management/core/utils/secure_storage_util.dart';
 import 'package:password_management/data/helpers/account_helper.dart';
-import 'package:password_management/data/helpers/passcode_helper.dart';
 
 class AccountModel {
   String id = '';
@@ -29,6 +27,16 @@ class AccountModel {
       note: json[AccountHelper.noteCol] ?? "",
       userId: json[AccountHelper.userId] ?? "",
     );
+  }
+
+  void decrypt(String key) {
+    appName = AesUtil.decryptData(appName, key);
+    userName = AesUtil.decryptData(userName, key);
+    password = AesUtil.decryptData(password, key);
+
+    if (note != "") {
+      note = AesUtil.decryptData(note, key);
+    }
   }
 }
 
@@ -59,17 +67,23 @@ class AddAccountModel {
     };
   }
 
-  Future<void> encryprt() async {
-    var key = await SecureStorageUtil.getValue(PasscodeHelper.passCodeKey);
-    if (key == null) {
-      return;
-    }
+  void encrypt(String key) {
     appName = AesUtil.encryptData(appName, key);
     userName = AesUtil.encryptData(userName, key);
     password = AesUtil.encryptData(password, key);
 
     if (note != "") {
       note = AesUtil.encryptData(note, key);
+    }
+  }
+
+  void decrypt(String key) {
+    appName = AesUtil.decryptData(appName, key);
+    userName = AesUtil.decryptData(userName, key);
+    password = AesUtil.decryptData(password, key);
+
+    if (note != "") {
+      note = AesUtil.decryptData(note, key);
     }
   }
 }

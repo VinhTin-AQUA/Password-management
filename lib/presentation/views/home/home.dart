@@ -5,7 +5,6 @@ import 'package:password_management/presentation/viewmodels/home_controller.dart
 import 'package:password_management/presentation/views/home/widgets/account_item.dart';
 import 'package:password_management/presentation/views/home/widgets/menu_bottom_bar.dart';
 import 'package:password_management/presentation/views/home/widgets/t_search_bar.dart';
-import 'package:password_management/presentation/views/home/widgets/user_info.dart';
 import 'package:password_management/presentation/widgets/loading_dialog.dart';
 import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 
@@ -66,14 +65,7 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              UserInfo(
-                // name: googleController.googleUserInfo.displayName,
-                // photoUrl: googleController.googleUserInfo.photoURL,
-                name: "AA",
-                photoUrl: "AA",
-              ),
               const SizedBox(height: 8),
-              const SizedBox(height: 16),
               TSearchBar(
                 onChanged: (value) {
                   homeController.onSearcChange(value);
