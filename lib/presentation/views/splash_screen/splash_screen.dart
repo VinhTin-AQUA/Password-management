@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/splash_controller.dart';
@@ -21,7 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
     SplashController.initGetXControllers();
-    await Future.wait([SplashController.initmediaStorePlus()]);
+    await Future.wait([
+      SplashController.initmediaStorePlus(),
+     
+    ]);
 
     var isCreatePassword = await SplashController.isInit();
     if (isCreatePassword == false) {

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 import 'package:password_management/core/router/routes.dart';
+import 'package:password_management/data/common/env.dart';
 import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/supabase_helper.dart';
 import 'package:password_management/data/supabase/base_supabase.dart';
@@ -17,6 +17,10 @@ class SplashController {
   }
 
   static void initGetXControllers() {}
+
+  static Future<void> initEnv() async {
+    await Env.init();
+  }
 
   static Future<void> initmediaStorePlus() async {
     if (Platform.isAndroid) {

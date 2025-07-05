@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:password_management/data/helpers/account_helper.dart';
+import 'package:password_management/data/helpers/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseManager {
@@ -32,13 +35,11 @@ class SupabaseManager {
         ),
       );
 
-      await Supabase.instance.client
-          .from(AccountHelper.tableName)
-          .select()
-          .maybeSingle();
+      await Supabase.instance.client.from(AccountHelper.tableName).select();
 
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      Logger.reportError(e, s);
       return "Key or Url is not valid.";
     }
   }

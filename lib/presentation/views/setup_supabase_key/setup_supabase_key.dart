@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:password_management/core/router/routes.dart';
+import 'package:password_management/data/helpers/logger.dart';
 import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
 import 'package:password_management/data/helpers/supabase_helper.dart';
