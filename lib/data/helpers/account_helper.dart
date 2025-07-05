@@ -1,4 +1,4 @@
-class AccountConstanst {
+class AccountHelper {
   static const String tableName = "accounts";
   static const String idCol = "id";
   static const String appNameCol = "appname";

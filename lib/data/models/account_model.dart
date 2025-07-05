@@ -1,4 +1,5 @@
-import 'package:password_management/core/constants/account_constanst.dart';
+
+import 'package:password_management/data/helpers/account_helper.dart';
 
 class AccountModel {
   String id = '';
@@ -19,12 +20,12 @@ class AccountModel {
 
   factory AccountModel.fromJson(Map<String, dynamic> json) {
     return AccountModel(
-      id: json[AccountConstanst.idCol] ?? "",
-      appName: json[AccountConstanst.appNameCol] ?? "",
-      userName: json[AccountConstanst.userNameCol] ?? "",
-      password: json[AccountConstanst.passwordCol] ?? "",
-      note: json[AccountConstanst.noteCol] ?? "",
-      userId: json[AccountConstanst.userId] ?? "",
+      id: json[AccountHelper.idCol] ?? "",
+      appName: json[AccountHelper.appNameCol] ?? "",
+      userName: json[AccountHelper.userNameCol] ?? "",
+      password: json[AccountHelper.passwordCol] ?? "",
+      note: json[AccountHelper.noteCol] ?? "",
+      userId: json[AccountHelper.userId] ?? "",
     );
   }
 }
@@ -48,11 +49,11 @@ class AddAccountModel {
 
   Map<String, dynamic> toJson() {
     return {
-      AccountConstanst.appNameCol: appName,
-      AccountConstanst.userNameCol: userName,
-      AccountConstanst.passwordCol: password,
-      AccountConstanst.noteCol: note,
-      AccountConstanst.userId: userId,
+      AccountHelper.appNameCol: appName,
+      AccountHelper.userNameCol: userName,
+      AccountHelper.passwordCol: password,
+      AccountHelper.noteCol: note,
+      AccountHelper.userId: userId,
     };
   }
 }
@@ -79,24 +80,24 @@ class EditAccountModel {
   factory EditAccountModel.fromJson(Map<String, dynamic> json) {
     // {id: 648f4463-5975-420d-8248-02ba79d5e53c, appname: Google, username: aba, password: aba, note: hahaha}
     return EditAccountModel(
-      id: json[AccountConstanst.idCol] ?? "",
-      appName: json[AccountConstanst.appNameCol] ?? "",
-      userName: json[AccountConstanst.userNameCol] ?? "",
-      password: json[AccountConstanst.passwordCol] ?? "",
-      confirmPassword: json[AccountConstanst.passwordCol] ?? "",
-      note: json[AccountConstanst.noteCol] ?? "",
-      userId: json[AccountConstanst.userId] ?? "",
+      id: json[AccountHelper.idCol] ?? "",
+      appName: json[AccountHelper.appNameCol] ?? "",
+      userName: json[AccountHelper.userNameCol] ?? "",
+      password: json[AccountHelper.passwordCol] ?? "",
+      confirmPassword: json[AccountHelper.passwordCol] ?? "",
+      note: json[AccountHelper.noteCol] ?? "",
+      userId: json[AccountHelper.userId] ?? "",
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      AccountConstanst.idCol: id,
-      AccountConstanst.appNameCol: appName,
-      AccountConstanst.userNameCol: userName,
-      AccountConstanst.passwordCol: password,
-      AccountConstanst.noteCol: note,
-      AccountConstanst.userId: userId,
+      AccountHelper.idCol: id,
+      AccountHelper.appNameCol: appName,
+      AccountHelper.userNameCol: userName,
+      AccountHelper.passwordCol: password,
+      AccountHelper.noteCol: note,
+      AccountHelper.userId: userId,
     };
   }
 }

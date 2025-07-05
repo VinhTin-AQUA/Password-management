@@ -1,3 +1,0 @@
-class PasscodeModel {
-  String passcode = "";
-}

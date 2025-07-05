@@ -7,12 +7,6 @@ CREATE TABLE Accounts (
     UserId TEXT NOT NULL
 );
 
-CREATE TABLE Passcodes (
-    Id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    Passcode TEXT NOT NULL,
-    UserId TEXT NOT NULL
-);
-
 --------------------------------------------------------
 --------------------- accounts ------------------------
 --------------------------------------------------------

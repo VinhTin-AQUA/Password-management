@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:password_management/core/constants/account_constanst.dart';
+import 'package:password_management/data/helpers/account_helper.dart';
 import 'package:password_management/data/models/account_model.dart';
 
 class HomeController extends GetxController {
@@ -73,10 +73,10 @@ class HomeController extends GetxController {
 
   void updateElement(String id, dynamic data) {
     final account = accounts.firstWhere((u) => u.id == id);
-    account.appName = data[AccountConstanst.appNameCol] ?? '';
-    account.userName = data[AccountConstanst.userNameCol] ?? '';
-    account.password = data[AccountConstanst.passwordCol] ?? '';
-    account.note = data[AccountConstanst.noteCol] ?? '';
+    account.appName = data[AccountHelper.appNameCol] ?? '';
+    account.userName = data[AccountHelper.userNameCol] ?? '';
+    account.password = data[AccountHelper.passwordCol] ?? '';
+    account.note = data[AccountHelper.noteCol] ?? '';
     originalAccounts = accounts.toList();
 
     accounts.refresh();

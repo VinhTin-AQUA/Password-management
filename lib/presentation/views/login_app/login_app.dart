@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
-import 'package:password_management/presentation/viewmodels/biometric_controller.dart';
-import 'package:password_management/presentation/viewmodels/passcode_controller.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/logo.dart';
@@ -17,31 +15,29 @@ class LoginApp extends StatefulWidget {
 
 class _LoginAppState extends State<LoginApp> {
   bool validPassword = true;
-  late final PasscodeController passwordController;
-  late final BiometricController biometricController;
+  // late final PasscodeController passwordController;
+  // late final BiometricController biometricController;
 
   @override
   void initState() {
     super.initState();
-    passwordController = Get.put(PasscodeController());
-    biometricController = Get.put(BiometricController());
+    // passwordController = Get.put(PasscodeController());
+    // biometricController = Get.put(BiometricController());
   }
 
   @override
   void dispose() {
-    Get.delete<PasscodeController>();
+    // Get.delete<PasscodeController>();
     super.dispose();
   }
 
   Future<void> _login() async {
-    final check = await passwordController.loginApp();
+    
     setState(() {
-      validPassword = true;
+      
     });
-    if (check == true) {
-      Get.offAllNamed(TRoutes.home);
-      return;
-    }
+   
+   
     setState(() {
       validPassword = false;
     });
@@ -74,7 +70,7 @@ class _LoginAppState extends State<LoginApp> {
                         const SizedBox(height: 40),
                         PasswordInputField(
                           hintText: 'Input password',
-                          onChanged: passwordController.updatePassword,
+                          onChanged: (String value) {},
                           errorText:
                               validPassword == true ? null : "Invalid Password",
                         ),
