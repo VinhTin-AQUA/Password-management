@@ -156,17 +156,14 @@ class EditAccountController extends GetxController {
         checkConfirmPassword == true;
   }
 
-  Future<bool> updateAccountModel() async {
-    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
-    if (key == null) {
-      return false;
-    }
+  Future<bool> updateAccountModel(String key) async {
     editAccountModel.value.encrypt(key);
     final check = await accountRepo.update(
       editAccountModel.value.id,
       editAccountModel.toJson(),
     );
     editAccountModel.value.decrypt(key);
+    editAccountModel.refresh();
     return check;
   }
 }

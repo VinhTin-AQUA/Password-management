@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:password_management/data/helpers/logger.dart';
+import 'package:password_management/data/helpers/passcode_helper.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/presentation/viewmodels/edit_account_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
@@ -39,9 +42,15 @@ class _EditAccountState extends State<EditAccount> {
     if (checkError == false) {
       return;
     }
+
     LoadingDialog.show();
-    var r = await editAccountController.updateAccountModel();
+    var key = await SecureStorageHelper.getValue(PasscodeHelper.passCodeKey);
+    if (key == null) {
+      throw Exception("Key is null");
+    }
+    var r = await editAccountController.updateAccountModel(key);
     LoadingDialog.hide();
+
     if (r == true) {
       if (mounted) {
         showNoticeDialog(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum AlertStatus { success, error }
 
@@ -19,6 +20,7 @@ void showNoticeDialog({
       return const SizedBox.shrink(); // Empty placeholder, actual content in transitionBuilder
     },
     transitionBuilder: (context, anim, _, __) {
+      FocusScope.of(Get.context!).unfocus(); // unfocus
       return Transform.scale(
         scale: anim.value,
         child: Opacity(

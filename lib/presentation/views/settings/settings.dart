@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/core/router/routes.dart';
+import 'package:password_management/data/helpers/passcode_helper.dart';
+import 'package:password_management/data/helpers/secure_storage_helper.dart';
+import 'package:password_management/data/helpers/supabase_helper.dart';
 import 'package:password_management/presentation/viewmodels/excel_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/button_with_icon.dart';
@@ -62,7 +65,12 @@ class _SettingsState extends State<Settings> {
 
   Future<void> importExcel() async {}
 
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    await SecureStorageHelper.clearValue(PasscodeHelper.passCodeKey);
+    await SecureStorageHelper.clearValue(SupabaseHelper.supabaseKey);
+    await SecureStorageHelper.clearValue(SupabaseHelper.supabaseUrl);
+    Get.offAllNamed(TRoutes.setupSupabaseKey);
+  }
 
   @override
   Widget build(BuildContext context) {
