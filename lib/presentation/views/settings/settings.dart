@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/presentation/viewmodels/excel_controller.dart';
 import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/widgets/button_with_icon.dart';
@@ -51,7 +52,7 @@ class _SettingsState extends State<Settings> {
       if (mounted) {
         showNoticeDialog(
           context: context,
-          title: "Success",
+          title: "Done",
           message: "Saved in Downloads",
           status: AlertStatus.success,
         );
@@ -81,16 +82,15 @@ class _SettingsState extends State<Settings> {
                     await exportExcel();
                   },
                 ),
-                // const SizedBox(height: 16),
-                // ButtonWithIcon(
-                //   icon: Icons.file_upload,
-                //   text: 'Import excel',
-                //   onPressed: () async {
-                //     await importExcel();
-                //   },
-                // ),
                 const SizedBox(height: 16),
-
+                ButtonWithIcon(
+                  icon: Icons.password_rounded,
+                  text: 'Change Passcode',
+                  onPressed: () {
+                    Get.toNamed(TRoutes.changePasscode);
+                  },
+                ),
+                const SizedBox(height: 16),
                 ButtonWithIcon(
                   icon: Icons.logout,
                   text: 'Logout',

@@ -46,7 +46,7 @@ class _EditAccountState extends State<EditAccount> {
       if (mounted) {
         showNoticeDialog(
           context: context,
-          title: "Success",
+          title: "Done",
           message: "Update account successfully",
           status: AlertStatus.success,
         );

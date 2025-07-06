@@ -86,7 +86,7 @@ class HomeController extends GetxController {
     return true;
   }
 
-  void onSearcChange(String value) {
+  void onSearchChange(String value) {
     if (value == '') {
       accounts.assignAll(originalAccounts);
     } else {
@@ -98,5 +98,15 @@ class HomeController extends GetxController {
       );
     }
     accounts.refresh();
+  }
+
+  Future<void> reEncrypt(String key) async {
+    for (var ac in originalAccounts) {
+      ac.encrypt(key);
+    }
+
+    await accountRepo.batchUpdate(
+      originalAccounts.map((e) => e.toJson()).toList(),
+    );
   }
 }

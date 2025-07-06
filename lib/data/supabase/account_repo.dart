@@ -45,12 +45,21 @@ class AccountRepo extends BaseSupabase {
   }
 
   Future<bool> update(Object id, dynamic newData) async {
-      await BaseSupabase.client.from(tableName).update(newData).eq(idCol, id);
-      return true;
+    await BaseSupabase.client.from(tableName).update(newData).eq(idCol, id);
+    return true;
   }
 
   Future<bool> delete(Object id) async {
     await BaseSupabase.client.from(tableName).delete().eq(idCol, id);
+    return true;
+  }
+
+  Future<bool> batchUpdate(List<Map<String, dynamic>> updates) async {
+    await BaseSupabase.client.rpc(
+      'batch_update_accounts',
+      params: {'data': updates},
+    );
+
     return true;
   }
 }

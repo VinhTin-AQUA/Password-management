@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:password_management/presentation/viewmodels/add_account_controller.dart';
 import 'package:password_management/presentation/views/add_account/add_account.dart';
+import 'package:password_management/presentation/views/change_passcode/change_passcode.dart';
 import 'package:password_management/presentation/views/edit_account/edit_account.dart';
 import 'package:password_management/presentation/views/home/home.dart';
 import 'package:password_management/presentation/views/login_app/login_app.dart';
@@ -17,6 +18,7 @@ class TRoutes {
   static const splashScreen = "/splash-screen";
   static const editAccount = "/edit-account";
   static const setupSupabaseKey = "/setup-supabase-key";
+  static const changePasscode = "/change-passcode";
 
   static String getInitialRoute() {
     return splashScreen;
@@ -69,6 +71,13 @@ class TRoutes {
     GetPage(
       name: TRoutes.setupSupabaseKey,
       page: () => SetupSupabaseKey(),
+      transition: Transition.fadeIn,
+      transitionDuration: Duration(milliseconds: 100),
+      curve: Curves.easeOut,
+    ),
+    GetPage(
+      name: TRoutes.changePasscode,
+      page: () => ChangePasscode(),
       transition: Transition.fadeIn,
       transitionDuration: Duration(milliseconds: 100),
       curve: Curves.easeOut,

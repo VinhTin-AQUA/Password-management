@@ -29,6 +29,17 @@ class AccountModel {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      AccountHelper.idCol: id,
+      AccountHelper.appNameCol: appName,
+      AccountHelper.userNameCol: userName,
+      AccountHelper.passwordCol: password,
+      AccountHelper.noteCol: note,
+      AccountHelper.userId: userId,
+    };
+  }
+
   void decrypt(String key) {
     appName = AesHelper.decryptData(appName, key);
     userName = AesHelper.decryptData(userName, key);
@@ -36,6 +47,16 @@ class AccountModel {
 
     if (note != "") {
       note = AesHelper.decryptData(note, key);
+    }
+  }
+
+  void encrypt(String key) {
+    appName = AesHelper.encryptData(appName, key);
+    userName = AesHelper.encryptData(userName, key);
+    password = AesHelper.encryptData(password, key);
+
+    if (note != "") {
+      note = AesHelper.encryptData(note, key);
     }
   }
 }

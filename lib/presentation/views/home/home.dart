@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
       if (mounted) {
         showNoticeDialog(
           context: context,
-          title: "Success",
+          title: "Done",
           message: "Delete successfully",
           status: AlertStatus.success,
         );
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
               const SizedBox(height: 8),
               TSearchBar(
                 onChanged: (value) {
-                  homeController.onSearcChange(value);
+                  homeController.onSearchChange(value);
                 },
               ),
               const SizedBox(height: 16),

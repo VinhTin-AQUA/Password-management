@@ -11,55 +11,46 @@ CREATE TABLE Accounts (
 --------------------- accounts ------------------------
 --------------------------------------------------------
 
--- Cho phép SELECT: Người dùng chỉ xem được các bản ghi của chính họ
-CREATE POLICY "Allow users to read their own accounts" 
-ON accounts FOR SELECT 
-TO authenticated 
-USING (auth.uid() = user_id);
-
--- Cho phép INSERT: Người dùng có thể thêm bản ghi mới với user_id là id của họ
-CREATE POLICY "Allow users to insert their own accounts" 
-ON accounts FOR INSERT 
-TO authenticated 
-WITH CHECK (auth.uid() = user_id);
-
--- Cho phép UPDATE: Người dùng chỉ cập nhật các bản ghi của chính họ
-CREATE POLICY "Allow users to update their own accounts" 
-ON accounts FOR UPDATE 
-TO authenticated 
-USING (auth.uid() = user_id) 
-WITH CHECK (auth.uid() = user_id);
-
--- Cho phép DELETE: Người dùng chỉ xóa các bản ghi của chính họ
-CREATE POLICY "Allow users to delete their own accounts" 
-ON accounts FOR DELETE 
-TO authenticated 
-USING (auth.uid() = user_id);
-
-
---------
--- Cho phép SELECT
+-- SELECT
 CREATE POLICY "Allow anyone to select accounts"
 ON accounts FOR SELECT
 TO public
 USING (true);
 
--- Cho phép INSERT
+-- INSERT
 CREATE POLICY "Allow anyone to insert accounts"
 ON accounts FOR INSERT
 TO public
 WITH CHECK (true);
 
--- Cho phép UPDATE
+-- UPDATE
 CREATE POLICY "Allow anyone to update accounts"
 ON accounts FOR UPDATE
 TO public
 USING (true)
 WITH CHECK (true);
 
--- Cho phép DELETE
+-- DELETE
 CREATE POLICY "Allow anyone to delete accounts"
 ON accounts FOR DELETE
 TO public
 USING (true);
 
+---- batch update accounts
+create or replace function batch_update_accounts(data jsonb)
+returns void as $$
+declare
+  item jsonb;
+begin
+  for item in select * from jsonb_array_elements(data)
+  loop
+    update accounts
+    set
+      appname = item->>'appname',
+      username = item->>'username',
+      password = item->>'password',
+      note = item->>'note'
+    where id = (item->>'id')::uuid; -- int or uuid
+  end loop;
+end;
+$$ language plpgsql;

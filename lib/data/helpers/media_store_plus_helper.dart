@@ -6,7 +6,7 @@ class MediaStorePlusHelper {
 
   static Future<bool> saveFileToDownloads(File file) async {
     final mediaStore = MediaStore();
-    final r = await mediaStore.saveFile(
+    await mediaStore.saveFile(
       tempFilePath: file.path,
       dirType: DirType.download,
       dirName: DirName.download,

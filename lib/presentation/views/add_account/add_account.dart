@@ -31,7 +31,7 @@ class _AddAccountState extends State<AddAccount> {
       if (mounted) {
         showNoticeDialog(
           context: context,
-          title: "Success",
+          title: "Done",
           message: "Add account successfully",
           status: AlertStatus.success,
         );

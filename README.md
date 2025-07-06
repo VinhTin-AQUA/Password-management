@@ -65,5 +65,5 @@ This is small basic tool. You only need
 
 -   ➡️ Step 2: Copy <b>Supabase Url</b> and <b>Supabase Key</b> to config App 
 
--   ➡️ Step 3: Enter Passcode <b>(Never forget the Passcode)</b>
+-   ➡️ Step 3: Enter Passcode <b>(Don't forget the Passcode)</b>
 

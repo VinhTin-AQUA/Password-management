@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:password_management/core/router/routes.dart';
 import 'package:password_management/data/helpers/secure_storage_helper.dart';
 import 'package:password_management/data/helpers/passcode_helper.dart';
-import 'package:password_management/data/helpers/supabase_helper.dart';
+import 'package:password_management/presentation/viewmodels/change_passcode_controller.dart';
+import 'package:password_management/presentation/viewmodels/home_controller.dart';
 import 'package:password_management/presentation/viewmodels/setup_key_controller.dart';
 import 'package:password_management/presentation/widgets/header.dart';
 import 'package:password_management/presentation/widgets/loading_dialog.dart';
-import 'package:password_management/presentation/widgets/logo.dart';
 import 'package:password_management/presentation/widgets/password_input.dart';
 import 'package:password_management/presentation/widgets/show_notice_dialog.dart';
 import 'package:password_management/presentation/widgets/t_button.dart';
 
-class SetupSupabaseKey extends StatefulWidget {
-  const SetupSupabaseKey({super.key});
+class ChangePasscode extends StatefulWidget {
+  const ChangePasscode({super.key});
 
   @override
-  State<SetupSupabaseKey> createState() => SetupSupabaseKeyState();
+  State<ChangePasscode> createState() => ChangePasscodeState();
 }
 
-class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
-  late SetupKeyController setupKeyController;
-  String? supabaseKeyErrorMessage;
-  String? supabaseUrlErrorMessage;
+class ChangePasscodeState extends State<ChangePasscode> {
+  late ChangePasscodeController changePasscodeController;
+  late HomeController homeController;
+  // String? supabaseKeyErrorMessage;
+  // String? supabaseUrlErrorMessage;
+  String? oldPasscodeErrorMessage;
   String? passcodeErrorMessage;
   String? confirmPasscodeErrorMessage;
+  String? oldPassCode;
 
   @override
   void initState() {
     super.initState();
-    setupKeyController = Get.put(SetupKeyController());
+    _init();
   }
 
   @override
@@ -38,33 +40,33 @@ class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
     super.dispose();
   }
 
-  bool checkSupabaseKey() {
-    setState(() {
-      if (setupKeyController.supabaseKey == "") {
-        supabaseKeyErrorMessage = "Supabase key is not empty";
-      } else {
-        supabaseKeyErrorMessage = null;
-      }
-    });
-    return supabaseKeyErrorMessage == null;
+  Future<void> _init() async {
+    changePasscodeController = Get.put(ChangePasscodeController());
+    homeController = Get.find<HomeController>();
+    oldPassCode = await SecureStorageHelper.getValue(
+      PasscodeHelper.passCodeKey,
+    );
   }
 
-  bool checkSupabaseUrl() {
+  bool checkOldPasscode() {
     setState(() {
-      if (setupKeyController.supabaseUrl == "") {
-        supabaseUrlErrorMessage = "Supabase url is not empty";
+      if (changePasscodeController.oldPasscode == "") {
+        oldPasscodeErrorMessage = "Old passcode is incorrect";
+      } else if (changePasscodeController.oldPasscode != oldPassCode) {
+        oldPasscodeErrorMessage = "Old passcode is incorrect";
       } else {
-        supabaseUrlErrorMessage = null;
+        oldPasscodeErrorMessage = null;
       }
     });
-    return supabaseUrlErrorMessage == null;
+
+    return oldPasscodeErrorMessage == null;
   }
 
-  bool checkPasscode() {
+  bool checkNewPasscode() {
     setState(() {
-      if (setupKeyController.passcode == "") {
+      if (changePasscodeController.newPasscode == "") {
         passcodeErrorMessage = "Passcode is not empty";
-      } else if (setupKeyController.passcode.length < 6) {
+      } else if (changePasscodeController.newPasscode.length < 6) {
         passcodeErrorMessage = "Passode is at least 6 characters";
       } else {
         passcodeErrorMessage = null;
@@ -73,9 +75,10 @@ class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
     return passcodeErrorMessage == null;
   }
 
-  bool checkConfirmPasscode() {
+  bool checkConfirmNewPasscode() {
     setState(() {
-      if (setupKeyController.passcode != setupKeyController.confirmPasscode) {
+      if (changePasscodeController.newPasscode !=
+          changePasscodeController.confirmPasscode) {
         confirmPasscodeErrorMessage = "Passcode is not match";
       } else {
         confirmPasscodeErrorMessage = null;
@@ -84,47 +87,37 @@ class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
     return confirmPasscodeErrorMessage == null;
   }
 
-  Future<void> setup() async {
-    bool checkKey = checkSupabaseKey();
-    bool checkUrl = checkSupabaseUrl();
-    bool checkPass = checkPasscode();
-    bool checkConfirmPass = checkConfirmPasscode();
-    bool isValid = checkKey && checkUrl && checkPass && checkConfirmPass;
+  Future<void> changePasscode() async {
+    bool checkOldPass = checkOldPasscode();
+    bool checkNewPass = checkNewPasscode();
+    bool checkConfirmNewPass = checkConfirmNewPasscode();
+    bool isValid = checkOldPass && checkNewPass && checkConfirmNewPass;
 
     if (isValid == false) {
       return;
     }
 
     LoadingDialog.show();
-    String? message = await setupKeyController.initSupabase();
+    await homeController.reEncrypt(changePasscodeController.newPasscode);
+    await SecureStorageHelper.saveValue(
+      PasscodeHelper.passCodeKey,
+      changePasscodeController.newPasscode,
+    );
     LoadingDialog.hide();
-    if (message == null) {
-      await SecureStorageHelper.saveValue(
-        SupabaseHelper.supabaseKey,
-        setupKeyController.supabaseKey,
-      );
 
-      await SecureStorageHelper.saveValue(
-        SupabaseHelper.supabaseUrl,
-        setupKeyController.supabaseUrl,
+    if (mounted) {
+      showNoticeDialog(
+        context: context,
+        title: "Done",
+        message: "Change Successfully",
+        status: AlertStatus.success,
       );
-
-      await SecureStorageHelper.saveValue(
-        PasscodeHelper.passCodeKey,
-        setupKeyController.passcode,
-      );
-
-      Get.offAllNamed(TRoutes.loginApp);
-    } else {
-      if (mounted) {
-        showNoticeDialog(
-          context: context,
-          title: "Error",
-          message: message,
-          status: AlertStatus.error,
-        );
-      }
     }
+
+    // await SecureStorageHelper.saveValue(
+    //   PasscodeHelper.passCodeKey,
+    //   setupKeyController.passcode,
+    // );
   }
 
   @override
@@ -148,32 +141,27 @@ class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
                     child: Column(
                       children: [
                         const SizedBox(height: 20),
-                        Logo(size: 90),
-                        const SizedBox(height: 20),
-                        const Text('Setup Key', style: TextStyle(fontSize: 20)),
+                        const Text(
+                          'Change Passcode',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         const SizedBox(height: 40),
                         PasswordInputField(
-                          hintText: 'SUPABASE KEY',
+                          hintText: 'Ole Passcode',
                           onChanged: (String value) {
-                            setupKeyController.updateSupabaseKey(value);
+                            changePasscodeController.updateOldPasscode(value);
                           },
-                          labelText: "SUPABASE KEY",
-                          errorText: supabaseKeyErrorMessage,
-                        ),
-                        const SizedBox(height: 20),
-                        PasswordInputField(
-                          hintText: 'SUPABASE URL',
-                          onChanged: (String value) {
-                            setupKeyController.updateSupabaseUrl(value);
-                          },
-                          labelText: "SUPABASE URL",
-                          errorText: supabaseUrlErrorMessage,
+                          labelText: "Old Passcode",
+                          errorText: oldPasscodeErrorMessage,
                         ),
                         const SizedBox(height: 20),
                         PasswordInputField(
                           hintText: 'Passcode',
                           onChanged: (String value) {
-                            setupKeyController.updatePasscode(value);
+                            changePasscodeController.updatePasscode(value);
                           },
                           labelText: "Passcode",
                           errorText: passcodeErrorMessage,
@@ -182,16 +170,18 @@ class SetupSupabaseKeyState extends State<SetupSupabaseKey> {
                         PasswordInputField(
                           hintText: 'Confirm Passcode',
                           onChanged: (String value) {
-                            setupKeyController.updateConfirmPasscode(value);
+                            changePasscodeController.updateConfirmPasscode(
+                              value,
+                            );
                           },
                           labelText: "Confirm Passcode",
                           errorText: confirmPasscodeErrorMessage,
                         ),
                         const SizedBox(height: 20),
                         TButton(
-                          text: 'Setup',
+                          text: 'Change',
                           onPressed: () async {
-                            await setup();
+                            await changePasscode();
                           },
                         ),
                       ],
