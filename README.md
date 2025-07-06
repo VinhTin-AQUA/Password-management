@@ -67,3 +67,5 @@ This is small basic tool. You only need
 
 -   ➡️ Step 3: Enter Passcode <b>(Don't forget the Passcode)</b>
 
+-   Env:
+    DISCORD_WEBHOOK_URL=YOUR_DISCORD_WEBHOOK_URL
